@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
 
-# Flask-SQLAlchemy instance
+# Flask-SQLAlchemy instance, which will be used to initialize the database
+# and manage the models in app.py
 db = SQLAlchemy()
 
 
@@ -14,21 +14,13 @@ class User(db.Model):
         user_name (str): The username of the user.
     """
     __tablename__ = 'users'
-    id = db.Column(Integer, primary_key=True, autoincrement=True)
-    user_name = db.Column(String)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_name = db.Column(db.String, nullable=False)
 
-    def __repr__(self):
-        """
-        Returns a string representation of the user.
-        This method is used for debugging and logging purposes.
-        """
-        return f"User(id={self.id}, name='{self.name}')"
+    # Establish relationship with UserMovies table
+    user_movies = db.relationship('UserMovies', backref='user_relation')
 
     def __str__(self):
-        """
-        Returns a string representation of the user.
-        This method is used to display the user information
-        """
         return f"User: {self.user_name}"
 
 
@@ -44,27 +36,38 @@ class Movie(db.Model):
         rating (int): The rating of the movie.
     """
     __tablename__ = 'movies'
-    id = db.Column(Integer, primary_key=True, autoincrement=True)
-    movie_name = db.Column(String)
-    director = db.Column(String)
-    year = db.Column(Integer)
-    rating = db.Column(Integer)
+    movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    movie_name = db.Column(db.String, nullable=False)
+    director = db.Column(db.String)
+    year = db.Column(db.Integer)
+    rating = db.Column(db.Integer)
 
-    def __repr__(self):
-        """
-        Returns a string representation of the movie.
-        This method is used for debugging and logging purposes.
-        """
-        return (f"Movie(id={self.id}, name='{self.movie_name}', "
-                f"director='{self.director}', year={self.year}, "
-                f"rating={self.rating})")
+    # Establish relationship with UserMovies table
+    user_movies = db.relationship('UserMovies', backref='movie_relation')
 
     def __str__(self):
-        """
-        Returns a string representation of the movie.
-        This method is used to display the movie information
-        """
         return (f"Movie: {self.movie_name}, "
                 f"Director: {self.director}, "
                 f"Year: {self.year}, "
                 f"Rating: {self.rating}")
+
+
+class UserMovies(db.Model):
+    """
+    Associates a user with one or several movies (one-to-many
+    relationship).
+
+    Attributes:
+        id (int): The unique identifier for the association.
+        user_id (int): The unique identifier for the user.
+        movie_id (int): The unique identifier for the movie.
+    """
+    __tablename__ = 'user_movies'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer,
+                db.ForeignKey('users.user_id'), nullable = False)
+    movie_id = db.Column(db.Integer,
+                db.ForeignKey('movies.movie_id'), nullable = False)
+
+    def __str__(self):
+        return f"User ID: {self.user_id}, Movie ID: {self.movie_id}"
