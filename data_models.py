@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 # and manage the models in app.py
 db = SQLAlchemy()
 
-
 class User(db.Model):
     """
     Represents a user in the database.
