@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Web App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ message }}</h1>
+      <div id="links">
+        <a href="/users" class="button">User list</a><br>
+        <a href="/add_user" class="button">Add user</a><br>
+      </div>
+</body>
+</html>

@@ -15,6 +15,7 @@ by calling the methods of the DataManagerSQLite class:
 
 from flask import Flask, jsonify, request, render_template
 import os
+import webbrowser
 from data_models import db, User, Movie
 from datamanager.data_manager_sqlite import DataManagerSQLite
 
@@ -49,20 +50,23 @@ def home():
     """
     Renders the home page of the application.
     """
-    return jsonify({"message": "Welcome to the Movie Web App!"}), 200
+    message = "Welcome to the Movie Web App!"
+
+    return render_template('home.html', message=message)
 
 
-@app.route('/users')
-def list_user():
+@app.route('/users') ## Works ######
+def list_users():
     """
     Returns a list of all users in the database.
     """
-    users_list = data_manager.get_all_users()
+    user_list = data_manager.get_all_users()
 
-    if users_list:
-        return jsonify([user.user_name for user in users_list]), 200
+    if user_list:
+        return render_template('users.html', user_list=user_list), 200
     else:
-        return jsonify({"message": "No users found."}), 404
+        message = "No users found."
+        return render_template('users.html', message=message), 404
 
 
 @app.route('/users/<int:user_id>')
@@ -86,12 +90,12 @@ def list_user_movies():
         return jsonify({"message": "No movies found for this user."}), 404
 
 
-@app.route('/add_user', methods=['GET', 'POST'])
+@app.route('/add_user', methods=['GET', 'POST']) ## Works ######
 def add_user():
     """
     Adds a new user to the database.
 
-    If a GET request is made, it renders the add_user.html template.
+    If a GET request is made, it renders the  add_user.html template.
 
     If a POST request is made, it retrieves the user data from the request,
     creates a new User object with it, and adds it to the database by calling
@@ -110,16 +114,84 @@ def add_user():
         # Check if the user already exists, if not, add the user
         if new_user_exists:
             # new_user_exists is True if the user was added successfully
-            return jsonify({"message": f"User {new_user_obj.user_name} added successfully!"}), 201
+            message = f"User {new_user_obj.user_name} added successfully!"
+            return render_template('add_user.html', message=message), 201
         else:
             # new_user_exists is None if the user already exists
-            return jsonify({"message": f"User {new_user_obj.user_name} already exists."}), 400
+            message = f"User {new_user_obj.user_name} already exists."
+            return render_template('add_user.html', message=message), 400
 
     return render_template('add_user.html')
 
 
+@app.route('/users/<int:user_id>/add_movie', methods=['GET', 'POST'])
+def add_movie(user_id):
+    """
+    Adds a new movie to the database.
+
+    If a GET request is made, it renders the add_movie.html template.
+
+    If a POST request is made, it passes the user ID from the request URL to check
+    if the user exists in the database. If the user exists,
+    it retrieves the movie data from the request form,
+    creates a new Movie object with it, and adds it to the database by calling
+    the add_movie method of the DataManagerSQLite instance.
+
+    Returns a JSON response with a success message,
+    or an error message if the movie already exists.
+    """
+    if request.method == 'POST':
+
+        ## Check if the user exists
+        users_list = data_manager.get_all_users()
+        for user in users_list:
+            if user.user_id == user_id:
+                break
+            else:
+                return jsonify({"message": "User does not exist."}), 404
+
+        ## If the user exists, get the data from the form and create a new Movie object
+        new_movie_obj = Movie(
+            movie_name=request.form.get('movie_name'),
+            director=request.form.get('director'),
+            year=request.form.get('year'),
+            rating=request.form.get('rating'),
+        )
+
+        # Call the add_movie method to add the new movie to the database
+        new_movie_exists = data_manager.add_movie(new_movie_obj)
+
+        # Check if the movie already exists, if not, add the movie
+        if new_movie_exists:
+            # new_movie_exists is True if the movie was added successfully
+            return jsonify({"message": f"Movie {new_movie_obj.movie_name} added successfully!"}), 201
+        else:
+            # new_movie_exists is None if the movie already exists
+            return jsonify({"message": f"Movie {new_movie_obj.movie_name} already exists."}), 400
+
+    return render_template('add_movie.html')
+
+
+@app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
+def update_movie(user_id, movie_id):
+    """
+    This route will display a form allowing for the updating
+    of details of a specific movie in a user’s list.
+    """
+    pass
+
+
+@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['GET'])
+def delete_movie(user_id, movie_id):
+    """
+    Upon visiting this route, a specific movie will be removed
+    from a user’s favorite movie list.
+    """
+    pass
 
 
 if __name__ == '__main__':
-    # Run the Flask application
-    app.run(debug=True)
+    # Run the Flask application and open the web browser
+    url = 'http://127.0.0.1:5002/'
+    webbrowser.open_new(url)
+    app.run(port=5002, debug=True)

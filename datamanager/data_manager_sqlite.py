@@ -102,20 +102,34 @@ class DataManagerSQLite(DataManagerInterface):
         Adds a new movie to the database.
 
         - Checks if the movie already exists in the database.
+        - If the movie does not exist, it adds the new movie to the database.
+        - Creates a new UserMovies association ???
 
         Parameters:
-
+            movie_obj (Movie): The Movie object to be added.
+        Returns:
+            True if the movie was added successfully,
+            None if the movie already exists.
         """
+        ## Check if the movie already exists
         movie_exists = Movie.query.filter_by(movie_name=movie_obj.movie_name).first()
         if movie_exists:
-            print(f"Movie '{movie_obj.movie_name}' already exists.")
             return None
 
+        # Add the new movie to the database
         self.db.session.add(movie_obj)
         self.db.session.commit()
 
+        ## Create a new UserMovies association
+        # Find the new movie id
+        new_movie_id = Movie.query.filter_by(movie_name=movie_obj.movie_name).first().movie_id
+        # Find the user id
+        user_id = movie_obj.user_id
         # Create a new UserMovies association
-        pass
+        user_movie_association = UserMovies(user_id=user_id, movie_id=new_movie_id)
+
+        self.db.session.add(user_movie_association)
+        self.db.session.commit()
 
         return True
 

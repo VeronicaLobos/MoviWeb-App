@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="form" id="Form">
@@ -12,5 +13,14 @@
             <input type="text" id="user_name" name="user_name" required><br><br>
             <input type="submit" value="Add User" class="button">
         </form>
+    </div>
+    {% if message %}
+    <div id="Message">
+        <p>{{ message }}</p>
+    </div>
+    {% endif %}
+    <div id="links">
+        <a href="/" class="button">Return home</a><br>
+    </div>
 </body>
 </html>
