@@ -122,22 +122,22 @@ class DataManagerSQLite(DataManagerInterface):
             self.db.session.add(new_movie)
             self.db.session.commit()
 
-        # Step 3. Get the movie ID of the newly added movie
-        movie_exists = Movie.query.filter_by(movie_name=new_movie.movie_name).first()
+        # Step 3. Get the movie ID of the existing/newly-added movie
+        movie = Movie.query.filter_by(movie_name=new_movie.movie_name).first()
 
         # Step 3.1. Check if the user already has a rating for this movie
-        user_movie_exists = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_exists.movie_id).first()
+        user_rating_exists = UserMovie.query.filter_by(user_id=user_id, movie_id=movie.movie_id).first()
 
         # Step 3.2. If the user already has a rating for this movie, return None
-        if user_movie_exists:
+        if user_rating_exists:
             return None
 
         # Step 4. If the user does not have a rating for this movie,
-        elif user_movie_exists is None:
+        elif user_rating_exists is None:
             # Create a new UserMovie association
-            user_movie = UserMovie(user_id=user_id, movie_id=movie_exists.movie_id, rating=rating)
+            user_rating = UserMovie(user_id=user_id, movie_id=movie_exists.movie_id, rating=rating)
             # And add the new UserMovie association to the database
-            self.db.session.add(user_movie)
+            self.db.session.add(user_rating)
             self.db.session.commit()
             return True
 

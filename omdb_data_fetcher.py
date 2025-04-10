@@ -9,10 +9,12 @@ import json
 import requests as req
 from dotenv import load_dotenv
 import urllib3.exceptions
+import time
+
 from data_models import Movie
 
 
-def _get_movie_info(movie_name: str) -> dict:
+def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
     """
     Fetches movie information from the OMDb API based
     on the provided movie title.
@@ -30,39 +32,47 @@ def _get_movie_info(movie_name: str) -> dict:
     load_dotenv()
     api_key = os.getenv("my_api_key")
     url = f"https://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
+    retries = 0
 
-    try:
-        response = req.get(url)
-        response.raise_for_status() # handle bad responses
-        print(f"Requesting '{movie_name}' to {url}")
-        json_string = response.text
-        movie_info_dict = json.loads(json_string)
-        if "Movie not found!" in json_string:
-            print(json_string)
-            return {}
+    while retries < max_retries:
+        try:
+            response = req.get(url)
+            response.raise_for_status()
+            print(f"Requesting '{movie_name}' to {url} (Attempt {retries + 1})")
+            json_string = response.text
+            movie_info_dict = json.loads(json_string)
+            if "Movie not found!" in json_string:
+                print(json_string)
+                return {}
+            return movie_info_dict
+        except req.exceptions.HTTPError as e:
+            if response is not None and response.status_code == 500:
+                retries += 1
+                delay = initial_delay * (2 ** (retries - 1))  # Exponential backoff
+                print(f"OMDb API Server Error (500) for '{movie_name}'. "
+                      f"Retrying in {delay} seconds...")
+                time.sleep(delay)
+            else:
+                print(f"HTTP Error for '{movie_name}': {e}")
+                break  # Exit the retry loop for other HTTP errors
+        except req.exceptions.ConnectionError as e:
+            if isinstance(e.args[0], urllib3.exceptions.NameResolutionError):
+                print(f"Name Resolution Error: Could not resolve the address for OMDb API. "
+                      f"Please check your internet connection.")
+            else:
+                print(f"Connection Error: {e}")
+            return None  # Return None on connection error
+        except json.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e}")
+            return None
+        except req.exceptions.Timeout:
+            print(f"Request timed out after 10 seconds for '{movie_name}'.")
+            break
+        except req.exceptions.RequestException as e:
+            print(f"General Request Error: {e}")
+            break
 
-        return movie_info_dict
-
-    except NameError as e:
-        print(f"Error: {e}")
-        print("Check URL and API key and try again.")
-    except KeyError as e:
-        print(f"Key Error: {e}")
-        print("Check if the API key 'my_api_key' is set "
-              "in your environment variables.")
-    except req.exceptions.Timeout:
-        print(f"Request timed out after 10 seconds for '{movie_name}'.")
-    except req.exceptions.ConnectionError as e:
-        if isinstance(e.args[0], urllib3.exceptions.NameResolutionError):
-            print(f"Name Resolution Error: {e}")
-        else:
-            print(f"Connection Error: {e}")
-        print(e)
-    except json.JSONDecodeError as e:
-        print(f"JSON Decode Error: {e}")
-    except (req.exceptions.HTTPError,
-            req.exceptions.RequestException) as e:
-        print(f"HTTP Error: {e}")
+    print("HERE")
     return {}
 
 
@@ -96,11 +106,15 @@ def get_new_movie_data(movie_name):
             )
             return new_movie_obj
         except TypeError as e:
-            print(e)
+            print(f"Type Error while creating Movie object: {e}")
+        except AttributeError as e:  # Catch AttributeError in case movie_info is None
+            print(f"AttributeError while creating Movie object: {e}")
         except UnboundLocalError as e:
-            print(e)
+            print(f"UnboundLocalError while creating Movie object: {e}")
 
-    return None
+    if movie_info == {}:
+        print("Could not fetch the movie data")
+        return None
 
 if __name__ == "__main__":
     # Example usage

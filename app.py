@@ -180,12 +180,13 @@ def add_movie(user_id):
         if new_movie_obj is None:
             message = f"Movie {movie_name} not found."
             return render_template('add_movie.html',
-                                   message=message), 404
+                                   message=message,
+                                   user_id=user_id), 404
 
         # If the movie was found, a Movie object is returned
         # and can be added to the database
         new_movie_exists = data_manager.add_movie(new_movie_obj,
-                                                  user_id, rating) #TODO!!!!
+                                                  user_id, rating)
 
         # Check if the movie was added successfully:
         # new_movie_exists is True if the movie was added
