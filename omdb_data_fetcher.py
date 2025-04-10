@@ -101,7 +101,8 @@ def get_new_movie_data(movie_name):
                 year = int(movie_info.get("Year")),
                 director = str(movie_info.get("Director")),
                 genre=str(movie_info.get("Genre")),
-                poster_url = str(movie_info.get("Poster"))
+                poster_url = str(movie_info.get("Poster")),
+                plot = str(movie_info.get("Plot"))
             )
             return new_movie_obj
         except TypeError as e:

@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <title>Movie Web App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>{{ message }}</h1>
       <div id="links">
-        <a href="/users" class="button">User list</a><br>
-        <a href="/add_user" class="button">Add user</a><br>
+        <a href="/users" class="button">User list</a>
+        <a href="/add_user" class="button">Add user</a>
       </div>
 
     <h2>Movies in the database</h2>
     <div class="movies-grid">
         {% for movie in movies %}
         <article class="movie">
-            <img src="{{ movie.poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
+            <a href="/movie/{{ movie.movie_id }}">
+                <img src="{{ movie.poster_url }}" alt="Movie Poster" class="book-cover" height="300">
+            </a>
         </article>
         {% endfor %}
     </div>

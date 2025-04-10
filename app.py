@@ -49,13 +49,15 @@ with app.app_context():
 
 """
 Step 3. Define the API endpoints:
-- 1. Define the home route ..................[√]
-- 2. Define the route to list all users......[√]
-- 3. Define the route to list user movies....[ ]
-- 4. Define the route to add a user..........[√]
-- 5. Define the route to add a movie.........[√]
-- 6. Define the route to update a movie......[ ]
-- 7. Define the route to delete a movie......[ ]
+- 1. Define the home route ......................[√]
+- 2. Define the route to list all users..........[√]
+- 3. Define the route to list user movies........[√]
+- 4. Define the route to add a user..............[√]
+- 5. Define the route to add a movie.............[√]
+- 6. Define the route to update a movie..........[√]
+- Extra. Define the route to update a rating.....[√]
+- 7. Define the route to delete a movie..........[√]
+- Extra. Define the route to get movie details...[√]
 """
 
 @app.route('/home')
@@ -209,11 +211,11 @@ def add_movie(user_id):
         # successfully or False if the movie already exists
         if new_movie_exists:
             message = (f"Movie {new_movie_obj.movie_name} added successfully"
-                       f"with rating {rating}!")
+                       f" with rating {rating}!")
             return render_template('add_movie.html',
                                    message=message,
                                    user_id=user_id), 201
-        else:
+        elif new_movie_exists is None:
             message = f"Movie {new_movie_obj.movie_name} already exists."
             return render_template('add_movie.html',
                                    message=message,
@@ -305,7 +307,6 @@ def update_movie(user_id, movie_id):
                             movie=movie)
 
 
-
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])
 def delete_movie(user_id, movie_id):
     """
@@ -331,6 +332,20 @@ def delete_movie(user_id, movie_id):
                                message=message,
                                user_id=user_id,
                                movie_id=movie_id), 404
+
+@app.route('/movie/<movie_id>')
+def movie_details(movie_id):
+    """
+    Returns the details of a specific movie.
+    """
+    movie = data_manager.get_movie(movie_id)
+    if movie:
+        return render_template('movie_info.html',
+                               movie=movie), 200
+    else:
+        message = "Movie not found."
+        return render_template('movie_info.html',
+                               message=message), 404
 
 
 if __name__ == '__main__':

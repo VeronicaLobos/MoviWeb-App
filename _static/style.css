@@ -1,25 +1,25 @@
 body {
-  background: #F5F5F0;
+  background: #A6D6D6;
   color: black;
-  font-family: Monaco;
+  font-family: National Park;
 }
 
 h1 {
     text-align: center;
-    color: #000000;
+    color: #8E7DBE;
+    background: #F7CFD8;
 }
 
 h2 {
     text-align: center;
-    color: #000000;
+    color: #8E7DBE;
 }
 
-.list-movies-title {
-  padding: 10px 0;
-  background: #FFC300;
-  color: #F5F5F0;
-  text-align: center;
-  font-size: 16pt;
+h3 {
+    margin: 0;
+    text-align: left;
+    font-size: 1.2em;
+    color: #000000;
 }
 
 .movies-grid {
@@ -27,6 +27,7 @@ h2 {
   padding: 0;
   margin: 0;
   margin-top: 20px;
+  margin-right: 20px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -39,33 +40,23 @@ h2 {
 }
 
 .movie {
-  width: 140px;
+  width: 210px;
   padding: 10px 5px 5px 15px;
-  background: #EFF1CF;
-}
-
-.movie-name,
-.movie-year,
-.movie-director,
-.movie-genre {
-  font-size: 0.8em;
-  text-align: center;
-}
-
-.movie-title {
-  margin-top: 10px;
-}
-
-.movie-year {
-  color: #999;
+  background: #F4F8D3;
 }
 
 .movie-cover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    width: 128px;
-    height: 193px;
+    width: 200px;
+    height: 300px;
 }
 
+.movie-details {
+    padding: 10px;
+    width: 300px;
+    background: #F7CFD8;
+    border-radius: 5px;
+}
 
 .button {
     background-color: #4CAF50; /*green*/
@@ -86,7 +77,7 @@ h2 {
 }
 
 .form {
-    background-color: #FFF;
+    background-color: #F7CFD8;
     border: 1px solid #DDD;
     padding: 20px;
     margin-bottom: 20px;
@@ -97,7 +88,7 @@ h2 {
     margin-top: 0;
 }
 
- .form input {
+.form input {
     margin: 10px 0;
     width: 200px;
     padding: 10px;

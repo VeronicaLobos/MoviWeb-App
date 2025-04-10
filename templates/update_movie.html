@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <title>Update Movie</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <h2>Update Movie</h2>
     <div class="form" id="Form">
-        <h2>Update User Rating</h2>
         <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="POST">
-            <label for="movie_name">Movie name:</label>
+            <label for="movie_name"><h3>Movie name:</h3></label>
             <input type="text" id="movie_name" name="rating" placeholder="{{ movie.movie_name }}"><br><br>
-            <label for="year">Year:</label>
+            <label for="year"><h3>Year:</h3></label>
             <input type="text" id="year" name="year" placeholder="{{ movie.year }}"><br><br>
-            <label for="director">Director:</label>
+            <label for="director"><h3>Director:</h3></label>
             <input type="text" id="director" name="director" placeholder="{{ movie.director }}"><br><br>
-            <label for="genre">Genre:</label>
+            <label for="genre"><h3>Genre:</h3></label>
             <input type="text" id="genre" name="genre" placeholder="{{ movie.genre }}"><br><br>
-            <label for="poster_url">Poster URL:</label>
+            <label for="poster_url"><h3>Poster URL:</h3></label>
             <input type="text" id="poster_url" name="poster_url" placeholder="{{ movie.poster_url }}"><br><br>
             <input type="submit" value="Update Movie" class="button">
         </form>
     </div>
     {% if message %}
     <div id="Message">
-        <p>{{ message }}</p>
+        <h3>{{ message }}</h3>
     </div>
     {% endif %}
     <div id="links">

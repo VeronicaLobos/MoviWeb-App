@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="form" id="Form">
-        <h2>Add Movie</h2>
+    <h2>Add Movie</h2>
+    <div class="form">
         <form action="/users/{{ user_id }}/add_movie" method="POST">
-            <label for="movie_name">Movie name:</label>
+            <label for="movie_name"><h3>Movie name:</h3></label>
             <input type="text" id="movie_name" name="movie_name" placeholder="Titanic" required><br><br>
-            <label for="rating">Rating:</label>
+            <label for="rating"><h3>Rating:</h3></label>
             <input type="text" id="rating" name="rating" placeholder="7.9"><br><br>
             <input type="submit" value="Add Movie" class="button">
         </form>
     </div>
     {% if message %}
     <div id="Message">
-        <p>{{ message }}</p>
+        <h3>{{ message }}</h3>
     </div>
     {% endif %}
     <div id="links">
-        <a href="/users" class="button">Return to users list</a><br>
-        <a href="/home" class="button">Return home</a><br>
+        <a href="/users" class="button">Return to users list</a>
+        <a href="/home" class="button">Return home</a>
     </div>
 </body>
 </html>

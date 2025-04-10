@@ -2,28 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update user rating</title>
+    <title>Movie Info</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Update user rating</h2>
-    <div class="form" id="Form">
-        <form action="/users/{{ user_id }}/update_rating/{{ movie_id }}" method="POST">
-            <label for="rating"><h3>Rating:</h3></label>
-            <input type="text" id="rating" name="rating" placeholder="7.9" required><br><br>
-            <input type="submit" value="Update Rating" class="button">
-        </form>
+    <h1>{{ movie.movie_name }}</h1>
+    <div class="movies-grid">
+        <article class="article">
+            <img src="{{ movie.poster_url }}" alt="Movie Poster"><br>
+        </article>
+
+    <div class="movie-details">
+        <h2>Movie Details</h2>
+        <h3>{{ movie.movie_name }} ({{ movie.year }})</h3><br>
+        <strong>Directed by</strong> {{ movie.director }}<br><br>
+        <strong>Genre:</strong> {{ movie.genre }}<br><br>
+        <strong>Plot:</strong> {{ movie.plot }}<br>
     </div>
+        </div>
+
     {% if message %}
     <div id="Message">
         <h3>{{ message }}</h3>
     </div>
     {% endif %}
     <div id="links">
-        <a href="/users" class="button">Return to users list</a><br>
         <a href="/home" class="button">Return home</a><br>
     </div>
 </body>

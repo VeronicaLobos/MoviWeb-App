@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>Users - MovieWeb App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Users</h1>
-    <div>
+    <div class="movie-details">
         <ul>
         {% for user in user_list %}
-            <li><a href="/users/{{ user.user_id }}">{{ user.user_name }}</a></li>
+            <li><a href="/users/{{ user.user_id }}"><h3>{{ user.user_name }}</h3></a></li>
         {% endfor %}
         </ul>
     </div>

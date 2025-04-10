@@ -42,6 +42,7 @@ class Movie(db.Model):
     director = db.Column(db.String)
     genre = db.Column(db.String)
     poster_url = db.Column(db.String)
+    plot = db.Column(db.String)
 
     # Establish relationship with UserMovies table
     user_movies = db.relationship('UserMovie', backref='movie_relation')
@@ -52,7 +53,8 @@ class Movie(db.Model):
                 f"Director: {self.director}, "
                 f"Year: {self.year}, "
                 f"Genre: {self.genre}, "
-                f"Poster URL: {self.poster_url}")
+                f"Poster URL: {self.poster_url}",
+                f"Plot: {self.plot}")
 
 
 class UserMovie(db.Model):

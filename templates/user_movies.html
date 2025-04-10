@@ -2,41 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User movies - MovieWeb App</title>
+    <title>Movie info</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>{{ user_name }}'s Movie Ratings</h1>
-    <div class="movies-grid">
-        {% for movie in user_movies %}
-            <article class="movie">
-                <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="book-cover" height="300"><br>
-                {{ movie[0].movie_name }} ({{ movie[0].year }})<br>
-                Directed by {{ movie[0].director }}<br>
-                Genre: {{ movie[0].genre }}<br>
-                Rating by user: {{ movie[1] }}<br>
-                <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
-                    <input type="submit" value="Delete from list">
-                </form>
-                <form action="/users/{{ user_id }}/update_rating/{{ movie[0].movie_id }}" method="get">
-                    <input type="submit" value="Update user rating">
-                </form>
-                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
-                    <input type="submit" value="Update movie data">
-                </form>
-            </article>
-        {% endfor %}
-    </div>
     </div>
     {% if message %}
     <div id="Message">
-        <p>{{ message }}</p>
+        <h3>{{ message }}</h3>
     </div>
     {% endif %}
     <div id="links">
-        <a href="/users/{{ user_id }}/add_movie" class="button">Add Movie</a><br>
-        <a href="/users" class="button">Return to users list</a><br>
+        <a href="/users/{{ user_id }}/add_movie" class="button">Add Movie</a>
+        <a href="/users" class="button">Return to users list</a>
         <a href="/home" class="button">Return home</a><br>
+    </div>
+    <div class="movies-grid">
+        {% for movie in user_movies %}
+            <article class="movie">
+                <h3>* User rated: {{ movie[1] }} *</h3><br>
+                <a href="/movie/{{ movie[0].movie_id }}">
+                    <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
+                </a>
+                <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
+                    <input type="submit" value="Delete from list" class="button">
+                </form>
+                <form action="/users/{{ user_id }}/update_rating/{{ movie[0].movie_id }}" method="get">
+                    <input type="submit" value="Update user rating" class="button">
+                </form>
+                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
+                    <input type="submit" value="Update movie data" class="button">
+                </form>
+            </article>
+        {% endfor %}
     </div>
 </body>
 </html>

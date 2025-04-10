@@ -4,24 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <h2>Add User</h2>
     <div class="form" id="Form">
-        <h2>Add User</h2>
         <form action="/add_user" method="POST">
-            <label for="user_name">Username:</label>
+            <label for="user_name"><h3>Username:</h3></label>
             <input type="text" id="user_name" name="user_name" required><br><br>
             <input type="submit" value="Add User" class="button">
         </form>
     </div>
     {% if message %}
     <div id="Message">
-        <p>{{ message }}</p>
+        <h3>{{ message }}</h3>
     </div>
     {% endif %}
     <div id="links">
-        <a href="/home" class="button">Return home</a><br>
-        <a href="/users" class="button">Users list</a><br>
+        <a href="/home" class="button">Return home</a>
+        <a href="/users" class="button">Users list</a>
     </div>
 </body>
 </html>

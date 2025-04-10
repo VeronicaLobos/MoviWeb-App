@@ -3,6 +3,9 @@
 <head>
     <title>Post {{ status }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
     <script>
         setTimeout(function() {
             window.location.href = "{{ url_for('home') }}";
@@ -10,10 +13,10 @@
     </script>
 </head>
 <body>
-    <h1>{{ status }}</h1>
+    <h2>{{ status }}</h2>
     <div class="post-message">
-        <p>{{ message }}</p>
-        <p>You will be redirected back to the Home page in 3 seconds...</p>
+        <h3>{{ message }}</h3>
+        <h3>You will be redirected back to the Home page in 3 seconds...</h3>
     </div>
 </body>
 </html>

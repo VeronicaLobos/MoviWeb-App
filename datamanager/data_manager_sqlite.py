@@ -191,7 +191,7 @@ class DataManagerSQLite(DataManagerInterface):
         # Step 4. If the user does not have a rating for this movie,
         elif user_rating_exists is None:
             # Create a new UserMovie association
-            user_rating = UserMovie(user_id=user_id, movie_id=movie_exists.movie_id, rating=rating)
+            user_rating = UserMovie(user_id=user_id, movie_id=movie.movie_id, rating=rating)
             # And add the new UserMovie association to the database
             self.db.session.add(user_rating)
             self.db.session.commit()
@@ -265,6 +265,18 @@ class DataManagerSQLite(DataManagerInterface):
         if user_movie:
             self.db.session.delete(user_movie)
             self.db.session.commit()
+
+            # Check if other users have rated the movie
+            other_users = UserMovie.query.filter_by(movie_id=movie_id).all()
+            if not other_users:
+                # If no other users have rated the movie, delete it from the Movie table
+                movie = Movie.query.filter_by(movie_id=movie_id).first()
+                self.db.session.delete(movie)
+                self.db.session.commit()
+                print(f"Movie '{movie_name.movie_name}' deleted successfully.")
+            else:
+                print(f"Movie '{movie_name.movie_name}' still has ratings from other users.")
+
             return movie_name
         else:
             print(f"Movie with ID {movie_id} not found for user with ID {user_id}.")
