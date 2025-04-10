@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User list</title>
+    <title>Users - MovieWeb App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>User List</h1>
+    <h1>Users</h1>
     <div>
         <ul>
         {% for user in user_list %}
-            <li>{{ user.user_name }}</li>
+            <li><a href="/users/{{ user.user_id }}">{{ user.user_name }}</a></li>
         {% endfor %}
         </ul>
     </div>
     <div id="links">
-        <a href="/" class="button">Return home</a><br>
+        <a href="/home" class="button">Return home</a><br>
     </div>
 </body>
 </html>

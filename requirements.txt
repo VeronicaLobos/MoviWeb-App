@@ -1,3 +1,6 @@
+dotenv
 flask
 flask_sqlalchemy
 SQLAlchemy
+requests
+urllib3

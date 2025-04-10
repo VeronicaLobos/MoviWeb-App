@@ -8,13 +8,9 @@
 <body>
     <div class="form" id="Form">
         <h2>Add Movie</h2>
-        <form action="/add_user" method="POST">
+        <form action="/users/{{ user_id }}/add_movie" method="POST">
             <label for="movie_name">Movie name:</label>
             <input type="text" id="movie_name" name="movie_name" required><br><br>
-            <label for="director">Director:</label>
-            <input type="text" id="director" name="director"><br><br>
-            <label for="year">Year:</label>
-            <input type="text" id="year" name="year"><br><br>
             <label for="rating">Rating:</label>
             <input type="text" id="rating" name="rating"><br><br>
             <input type="submit" value="Add Movie" class="button">
@@ -26,7 +22,7 @@
     </div>
     {% endif %}
     <div id="links">
-        <a href="/" class="button">Return home</a><br>
+        <a href="/home" class="button">Return home</a><br>
     </div>
 </body>
 </html>

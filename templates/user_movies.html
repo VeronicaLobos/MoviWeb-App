@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User movies - MovieWeb App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>User</h1>
+    <div>
+        <ul>
+        {% for movie in user_movies %}
+            <li>
+                {{ movie.movie_name }} ({{ movie.year }}), directed by {{ movie.director }}.<br>
+                Rating by user: {{ movie.rating }} {{ movie.movie_id }}
+                <form action="/users/{{ user_id }}/delete_movie/{{ movie.movie_id }}" method="post">
+                    <input type="submit" value="Delete Movie">
+                </form>
+                <form action="/users/{{ user_id }}/update_movie/{{ movie.movie_id }}" method="post">
+                    <input type="submit" value="Update Movie">
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    </div>
+    {% if message %}
+    <div id="Message">
+        <p>{{ message }}</p>
+    </div>
+    {% endif %}
+    <div id="links">
+        <a href="/users/{{ user_id }}/add_movie" class="button">Add Movie</a><br>
+        <a href="/users" class="button">Return to users list</a><br>
+        <a href="/home" class="button">Return home</a><br>
+    </div>
+</body>
+</html>

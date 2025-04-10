@@ -36,38 +36,22 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
-    def add_movie(self, movie):
+    def add_movie(self, movie, user_id, rating):
         """
         Adds a new movie to the database.
         """
         pass
 
     @abstractmethod
-    def update_movie(self, movie):
+    def update_movie(self, user_id, movie_name, movie_obj):
         """
         Updates an existing movie in the database.
         """
         pass
 
     @abstractmethod
-    def delete_movie(self, movie_id):
+    def delete_movie(self, user_id, movie_id):
         """
         Deletes a movie from the database.
-        """
-        pass
-
-#####
-
-    @abstractmethod
-    def get_user(self, user_id):
-        """
-        Retrieves a user from the database by its ID.
-        """
-        pass
-
-    @abstractmethod
-    def get_movie(self, movie_id):
-        """
-        Retrieves a movie from the database by its ID.
         """
         pass
