@@ -54,17 +54,17 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
                 time.sleep(delay)
             else:
                 print(f"HTTP Error for '{movie_name}': {e}")
-                break  # Exit the retry loop for other HTTP errors
+                break
         except req.exceptions.ConnectionError as e:
             if isinstance(e.args[0], urllib3.exceptions.NameResolutionError):
                 print(f"Name Resolution Error: Could not resolve the address for OMDb API. "
                       f"Please check your internet connection.")
             else:
                 print(f"Connection Error: {e}")
-            return None  # Return None on connection error
+            break
         except json.JSONDecodeError as e:
             print(f"JSON Decode Error: {e}")
-            return None
+            break
         except req.exceptions.Timeout:
             print(f"Request timed out after 10 seconds for '{movie_name}'.")
             break
@@ -72,7 +72,6 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
             print(f"General Request Error: {e}")
             break
 
-    print("HERE")
     return {}
 
 
@@ -107,14 +106,13 @@ def get_new_movie_data(movie_name):
             return new_movie_obj
         except TypeError as e:
             print(f"Type Error while creating Movie object: {e}")
-        except AttributeError as e:  # Catch AttributeError in case movie_info is None
-            print(f"AttributeError while creating Movie object: {e}")
         except UnboundLocalError as e:
             print(f"UnboundLocalError while creating Movie object: {e}")
 
     if movie_info == {}:
         print("Could not fetch the movie data")
         return None
+
 
 if __name__ == "__main__":
     # Example usage

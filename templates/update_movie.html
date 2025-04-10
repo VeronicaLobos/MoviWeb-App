@@ -7,11 +7,11 @@
 </head>
 <body>
     <div class="form" id="Form">
-        <h2>Add User</h2>
-        <form action="/add_user" method="POST">
-            <label for="user_name">Username:</label>
-            <input type="text" id="user_name" name="user_name" required><br><br>
-            <input type="submit" value="Add User" class="button">
+        <h2>Update Movie</h2>
+        <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="POST">
+            <label for="rating">Rating:</label>
+            <input type="text" id="rating" name="rating" placeholder="7.9" required><br><br>
+            <input type="submit" value="Update Movie" class="button">
         </form>
     </div>
     {% if message %}
@@ -20,8 +20,8 @@
     </div>
     {% endif %}
     <div id="links">
+        <a href="/users" class="button">Return to users list</a><br>
         <a href="/home" class="button">Return home</a><br>
-        <a href="/users" class="button">Users list</a><br>
     </div>
 </body>
 </html>

@@ -10,9 +10,9 @@
         <h2>Add Movie</h2>
         <form action="/users/{{ user_id }}/add_movie" method="POST">
             <label for="movie_name">Movie name:</label>
-            <input type="text" id="movie_name" name="movie_name" required><br><br>
+            <input type="text" id="movie_name" name="movie_name" placeholder="Titanic" required><br><br>
             <label for="rating">Rating:</label>
-            <input type="text" id="rating" name="rating"><br><br>
+            <input type="text" id="rating" name="rating" placeholder="7.9"><br><br>
             <input type="submit" value="Add Movie" class="button">
         </form>
     </div>
@@ -22,6 +22,7 @@
     </div>
     {% endif %}
     <div id="links">
+        <a href="/users" class="button">Return to users list</a><br>
         <a href="/home" class="button">Return home</a><br>
     </div>
 </body>

@@ -6,18 +6,21 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>User</h1>
+    <h1>{{ user_name }}'s Movie Ratings</h1>
     <div>
         <ul>
         {% for movie in user_movies %}
             <li>
-                {{ movie.movie_name }} ({{ movie.year }}), directed by {{ movie.director }}.<br>
-                Rating by user: {{ movie.rating }} {{ movie.movie_id }}
-                <form action="/users/{{ user_id }}/delete_movie/{{ movie.movie_id }}" method="post">
-                    <input type="submit" value="Delete Movie">
+                <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="book-cover"><br>
+                {{ movie[0].movie_name }} ({{ movie[0].year }})<br>
+                Directed by {{ movie[0].director }}<br>
+                Genre: {{ movie[0].genre }}<br>
+                Rating by user: {{ movie[1] }}<br>
+                <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
+                    <input type="submit" value="Delete from list">
                 </form>
-                <form action="/users/{{ user_id }}/update_movie/{{ movie.movie_id }}" method="post">
-                    <input type="submit" value="Update Movie">
+                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
+                    <input type="submit" value="Update user rating">
                 </form>
             </li>
         {% endfor %}

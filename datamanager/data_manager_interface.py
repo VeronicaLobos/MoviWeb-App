@@ -15,14 +15,28 @@ from abc import ABC, abstractmethod
 class DataManagerInterface(ABC):
 
     @abstractmethod
-    def get_all_users(selfself):
+    def get_user_name(self, user_id):
+        """
+        Retrieves the user_name associated with a given user ID.
+        """
+        pass
+
+    @abstractmethod
+    def get_all_users(self):
         """
         Retrieves all users from the database.
         """
         pass
 
     @abstractmethod
-    def get_user_movies(selfself, user_id):
+    def get_movie(self, movie_id):
+        """
+        Retrieves a movie from the database.
+        """
+        pass
+
+    @abstractmethod
+    def get_user_movies(self, user_id):
         """
         Retrieves all movies for a given user from the database.
         """
@@ -43,7 +57,7 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
-    def update_movie(self, user_id, movie_name, movie_obj):
+    def update_movie(self, user_id, movie_id, rating):
         """
         Updates an existing movie in the database.
         """

@@ -29,6 +29,25 @@ class DataManagerSQLite(DataManagerInterface):
 
     ## Any get operation will return a list of objects
 
+    def get_user_name(self, user_id: int) -> str:
+        """
+        Retrieves the user_name associated with a given user ID.
+
+        Parameters:
+            user_id (int): The ID of the user whose name is to be retrieved.
+
+        Returns:
+            str: The user_name associated with the given user ID,
+            or None if the user does not exist.
+        """
+        # Get the user object by ID
+        user = User.query.filter_by(user_id=user_id).first()
+        if user:
+            return user.user_name
+        else:
+            return None
+
+
     def get_all_users(self) -> list:
         """
         Retrieves all users from the database.
@@ -45,6 +64,26 @@ class DataManagerSQLite(DataManagerInterface):
             return []
 
 
+    def get_movie(self, movie_id: int) -> Movie:
+        """
+        Retrieves a movie from the database.
+
+        Parameters:
+            movie_id (int): The ID of the movie to be retrieved.
+
+        Returns:
+
+        """
+        # Get the movie object by ID
+        movie = Movie.query.filter_by(movie_id=movie_id).first()
+        if movie:
+            return movie
+        else:
+            return None
+
+
+
+
     def get_user_movies(self, user_id: int) -> list:
         """
         Retrieves all movies associated with a given user.
@@ -52,16 +91,17 @@ class DataManagerSQLite(DataManagerInterface):
         Parameters:
             user_id (int): The ID of the user whose movies are to be retrieved.
 
-        Returns a list of Movie objects associated with a given user,
-        with the rating included in the UserMovie association.
-        or an empty list if the user does not exist or has no movies.
+        Returns:
+            a list of tuples: (movie_data: Movie, rating: float),
+            or an empty list if no movies are found.
         """
         # Get the movies associated with the user id in the UserMovies table
         user_movies = UserMovie.query.filter_by(user_id=user_id).all()
+
         if user_movies:
             # Return the movies associated with the user
             # with the rating included in the UserMovies association
-            return [movie_obj.movie_relation for movie_obj in user_movies]
+            return [(movie.movie_relation, movie.rating) for movie in user_movies]
         else:
             return []
 
@@ -142,36 +182,51 @@ class DataManagerSQLite(DataManagerInterface):
             return True
 
 
-    def update_movie(self, user_id, movie_to_update: str, movie_obj: Movie) -> bool:
+    def update_movie(self, user_id, movie_id, rating) -> bool:
         """
-        Updates an existing movie in the database.
-
-        - Checks if the movie exists in the database.
-        - If the movie exists, it updates the movie details.
+        Updates the rating of a movie in the UserMovie table.
 
         Parameters:
             user_id (int): The ID of the user associated with the movie.
-            movie_to_update (str): The name of the movie to be updated.
-            movie_obj (Movie): The updated Movie object.
+            movie_id (int): The ID of the movie to be updated.
+            rating (float): The new rating of the movie by the user.
 
         Returns:
             True if the movie was updated successfully,
             None if the movie does not exist.
         """
+        # Fetch the user_movie object from the UserMovie table
+        movie = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
 
-
-
-    def delete_movie(self, user_id, movie_id):
-        """
-        Deletes a movie from the database by its ID.
-        """
-        # Find the related UserMovie entry
-        user_movie = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-        if user_movie:
-            # Delete the UserMovie entry
-            self.db.session.delete(user_movie)
+        if movie:
+            # Update the rating of the movie
+            movie.rating = rating
             self.db.session.commit()
             return True
-        else:
-            return None
 
+
+    def delete_movie(self, user_id, movie_id) -> str:
+        """
+        Deletes a row from the UserMovie table based on user_id and movie_id.
+
+        Parameters:
+            user_id (int): The ID of the user associated with the movie.
+            movie_id (int): The ID of the movie to be deleted.
+
+        Returns:
+            bool: True if the movie was deleted successfully, False otherwise.
+        """
+        # Fetch the movie title from the Movie table with the given movie_id
+        movie_name = Movie.query.filter_by(movie_id=movie_id).first()
+        print(movie_name.movie_name)
+
+        # Fetch the movie object from the UserMovie table
+        user_movie = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+
+        if user_movie:
+            self.db.session.delete(user_movie)
+            self.db.session.commit()
+            return movie_name
+        else:
+            print(f"Movie with ID {movie_id} not found for user with ID {user_id}.")
+            return False

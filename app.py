@@ -51,9 +51,9 @@ with app.app_context():
 Step 3. Define the API endpoints:
 - 1. Define the home route ..................[√]
 - 2. Define the route to list all users......[√]
-- 3. Define the route to list user movies....[√]
+- 3. Define the route to list user movies....[ ]
 - 4. Define the route to add a user..........[√]
-- 5. Define the route to add a movie.........[ ]
+- 5. Define the route to add a movie.........[√]
 - 6. Define the route to update a movie......[ ]
 - 7. Define the route to delete a movie......[ ]
 """
@@ -96,21 +96,29 @@ def list_user_movies(user_id):
 
     - Queries the database for all movies associated with the user
     by calling the get_user_movies method of the DataManagerSQLite instance.
+    - Queries the database for the user_name associated with the user_id.
 
     Returns a render of the user_movies.html template with
-    the list of movies associated with the user.
+    the list of movies containing the movie name and rating, and the user_id.
     """
+    # Get the user_movies from the database with the user_id
     user_movies = data_manager.get_user_movies(user_id)
+    # Get the user_name from the database with the user_id
+    user_name = data_manager.get_user_name(user_id)
 
     if user_movies:
+        # Extract the movie objects and their ratings
+        user_movies = [(movie[0], movie[1]) for movie in user_movies]
         return render_template('user_movies.html',
                                user_id=user_id,
-                               user_movies=user_movies), 200
+                               user_movies=user_movies,
+                               user_name=user_name), 200
     else:
         message = "No movies found for this user."
         return render_template('user_movies.html',
                                user_id=user_id,
-                               message=message), 404
+                               message=message,
+                               user_name=user_name), 404
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -169,6 +177,10 @@ def add_movie(user_id):
         If the movie is added successfully, it returns a render
         containing a message informing the user with the resulting
         operation.
+        Note: by providing the user_id in the render_template,
+        it allows the user to resubmit the form. This avoids
+        the flask app from crashing because the route
+        is not found.
     """
     if request.method == 'POST':
         ## Create a new Movie object
@@ -176,7 +188,8 @@ def add_movie(user_id):
         rating = request.form.get('rating')
         new_movie_obj = data_fetcher(movie_name)
 
-        # If new_movie_obj is None, it means the movie was not found
+        # If new_movie_obj is None, it means the movie was not found, or
+        # there was an error fetching the data, or no internet connection
         if new_movie_obj is None:
             message = f"Movie {movie_name} not found."
             return render_template('add_movie.html',
@@ -212,25 +225,51 @@ def update_movie(user_id, movie_id):
     This route will display a form allowing for the updating
     of details of a specific movie in a user’s list.
     """
-    pass
+    if request.method == "POST":
+        # Get the updated movie data from the form
+        rating = request.form.get('rating')
+
+        # Get the movie name from the database
+        movie = data_manager.get_movie(movie_id)
+
+        updated_movie = data_manager.update_movie(user_id,
+                            movie_id, rating)
+
+        if updated_movie:
+            status = "Movie updated"
+            message = f"Movie {movie.movie_name} updated successfully!"
+            return render_template('redirect.html',
+                                   status=status,
+                                   message=message,
+                                   user_id=user_id,
+                                   movie_id=movie_id), 200
+
+    return render_template('update_movie.html',
+                            user_id=user_id, movie_id=movie_id)
 
 
-@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['GET'])
+@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])
 def delete_movie(user_id, movie_id):
     """
     Upon visiting this route, a specific movie will be removed
     from a user’s favorite movie list.
     """
+    # Call the delete_movie method to delete the movie from the database
+    # should return the deleted movie name
     deleted_movie = data_manager.delete_movie(user_id, movie_id)
     if deleted_movie:
+        status = "Movie deleted"
         message = f"Movie {deleted_movie.movie_name} deleted successfully!"
-        return render_template('delete_movie.html',
+        return render_template('redirect.html',
+                               status=status,
                                message=message,
                                user_id=user_id,
                                movie_id=movie_id), 200
     else:
+        status = "Movie not found"
         message = f"Movie with ID {movie_id} not found."
-        return render_template('delete_movie.html',
+        return render_template('redirect.html',
+                               status=status,
                                message=message,
                                user_id=user_id,
                                movie_id=movie_id), 404
