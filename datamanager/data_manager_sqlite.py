@@ -82,6 +82,22 @@ class DataManagerSQLite(DataManagerInterface):
             return None
 
 
+    def get_all_movies(self):
+        """
+        Retrieves all movies from the database.
+
+        - Queries the database for all movies.
+
+        Returns:
+            list: A list of Movie objects,
+            or an empty list if no movies are found.
+        """
+        # Get all movies from the database
+        movies = Movie.query.all()
+        if movies:
+            return movies
+        else:
+            return []
 
 
     def get_user_movies(self, user_id: int) -> list:
@@ -182,7 +198,7 @@ class DataManagerSQLite(DataManagerInterface):
             return True
 
 
-    def update_movie(self, user_id, movie_id, rating) -> bool:
+    def update_rating(self, user_id, movie_id, rating) -> bool:
         """
         Updates the rating of a movie in the UserMovie table.
 
@@ -196,13 +212,36 @@ class DataManagerSQLite(DataManagerInterface):
             None if the movie does not exist.
         """
         # Fetch the user_movie object from the UserMovie table
-        movie = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+        user_rating = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
 
-        if movie:
+        if user_rating:
             # Update the rating of the movie
-            movie.rating = rating
+            user_rating.rating = rating
             self.db.session.commit()
             return True
+
+
+    def update_movie(self, updated_movie: Movie) -> bool:
+        """
+        Updates the movie details in the database.
+
+        - updates the movie details in the database.
+
+        Parameters:
+            updated_movie (Movie): The Movie object with updated details.
+
+        Returns:
+            str: The name of the updated movie,
+            None if the movie does not exist.
+        """
+        movie_to_update = Movie.query.filter_by(movie_id=updated_movie.movie_id).first()
+        if movie_to_update:
+            self.db.session.commit()
+            return movie_to_update.movie_name
+        else:
+            print(f"Movie with ID {updated_movie.movie_id} not found.")
+            return None
+
 
 
     def delete_movie(self, user_id, movie_id) -> str:

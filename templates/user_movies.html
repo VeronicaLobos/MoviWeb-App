@@ -7,11 +7,10 @@
 </head>
 <body>
     <h1>{{ user_name }}'s Movie Ratings</h1>
-    <div>
-        <ul>
+    <div class="movies-grid">
         {% for movie in user_movies %}
-            <li>
-                <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="book-cover"><br>
+            <article class="movie">
+                <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="book-cover" height="300"><br>
                 {{ movie[0].movie_name }} ({{ movie[0].year }})<br>
                 Directed by {{ movie[0].director }}<br>
                 Genre: {{ movie[0].genre }}<br>
@@ -19,12 +18,14 @@
                 <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
                     <input type="submit" value="Delete from list">
                 </form>
-                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
+                <form action="/users/{{ user_id }}/update_rating/{{ movie[0].movie_id }}" method="get">
                     <input type="submit" value="Update user rating">
                 </form>
-            </li>
+                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
+                    <input type="submit" value="Update movie data">
+                </form>
+            </article>
         {% endfor %}
-        </ul>
     </div>
     </div>
     {% if message %}

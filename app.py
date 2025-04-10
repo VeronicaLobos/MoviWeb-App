@@ -66,8 +66,11 @@ def home():
     """
     message = "Welcome to the Movie Web App!"
 
+    movies = data_manager.get_all_movies()
+
     return render_template('home.html',
-                           message=message)
+                           message=message,
+                           movies=movies), 200
 
 
 @app.route('/users')
@@ -219,8 +222,8 @@ def add_movie(user_id):
     return render_template('add_movie.html', user_id=user_id)
 
 
-@app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
-def update_movie(user_id, movie_id):
+@app.route('/users/<int:user_id>/update_rating/<int:movie_id>', methods=['GET', 'POST'])
+def update_rating(user_id, movie_id):
     """
     This route will display a form allowing for the updating
     of details of a specific movie in a user’s list.
@@ -232,7 +235,7 @@ def update_movie(user_id, movie_id):
         # Get the movie name from the database
         movie = data_manager.get_movie(movie_id)
 
-        updated_movie = data_manager.update_movie(user_id,
+        updated_movie = data_manager.update_rating(user_id,
                             movie_id, rating)
 
         if updated_movie:
@@ -244,8 +247,63 @@ def update_movie(user_id, movie_id):
                                    user_id=user_id,
                                    movie_id=movie_id), 200
 
-    return render_template('update_movie.html',
+    return render_template('update_rating.html',
                             user_id=user_id, movie_id=movie_id)
+
+
+@app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
+def update_movie(user_id, movie_id):
+    """
+    This route will display a form allowing for the updating
+    of details of a specific movie in a user’s list.
+    """
+    if request.method == "POST":
+        # Get the current movie object from the database
+        movie_to_update = data_manager.get_movie(movie_id)
+
+        # If the corresponding field is not empty,
+        # update the movie attribute with the new value
+        if movie_to_update:
+            if 'movie_name' in request.form and request.form['movie_name']:
+                movie_to_update.movie_name = request.form['movie_name']
+            if 'director' in request.form and request.form['director']:
+                movie_to_update.director = request.form['director']
+            if 'year' in request.form and request.form['year']:
+                movie_to_update.year = request.form['year']
+            if 'genre' in request.form and request.form['genre']:
+                movie_to_update.genre = request.form['genre']
+            if 'poster_url' in request.form and request.form['poster_url']:
+                movie_to_update.poster_url = request.form['poster_url']
+
+        updated_movie_name = data_manager.update_movie(movie_to_update)
+
+        if updated_movie_name:
+            status = "Movie updated"
+            message = f"Movie {updated_movie_name} updated successfully!"
+            return render_template('redirect.html',
+                                   status=status,
+                                   message=message,
+                                   user_id=user_id,
+                                   movie_id=movie_id), 200
+        else:
+            status = "Movie not found"
+            message = f"Movie with ID {movie_to_update.movie_name} not found."
+            return render_template('redirect.html',
+                                   status=status,
+                                   message=message,
+                                   user_id=user_id,
+                                   movie_id=movie_id), 404
+
+    ## If the method is 'GET'
+    # Get the updated movie data from the form
+    movie = data_manager.get_movie(movie_id)
+    # Render the template with the current movie data in the
+    # form's placeholders
+    return render_template('update_movie.html',
+                            user_id=user_id,
+                            movie_id=movie_id,
+                            movie=movie)
+
 
 
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])

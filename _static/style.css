@@ -9,8 +9,12 @@ h1 {
     color: #000000;
 }
 
+h2 {
+    text-align: center;
+    color: #000000;
+}
 
-.list-books-title {
+.list-movies-title {
   padding: 10px 0;
   background: #FFC300;
   color: #F5F5F0;
@@ -18,7 +22,7 @@ h1 {
   font-size: 16pt;
 }
 
-.books-grid {
+.movies-grid {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -29,33 +33,34 @@ h1 {
   gap: 20px;
 }
 
-.book-grid article {
+.movie-grid article {
   padding: 10px 15px;
   text-align: center;
 }
 
-.book {
+.movie {
   width: 140px;
   padding: 10px 5px 5px 15px;
   background: #EFF1CF;
 }
 
-.book-title,
-.book-year,
-.book-author {
+.movie-name,
+.movie-year,
+.movie-director,
+.movie-genre {
   font-size: 0.8em;
   text-align: center;
 }
 
-.book-title {
+.movie-title {
   margin-top: 10px;
 }
 
-.book-year {
+.movie-year {
   color: #999;
 }
 
-.book-cover {
+.movie-cover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     width: 128px;
     height: 193px;

@@ -36,6 +36,13 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
+    def get_all_movies(self):
+        """
+        Retrieves all movies from the database.
+        """
+        pass
+
+    @abstractmethod
     def get_user_movies(self, user_id):
         """
         Retrieves all movies for a given user from the database.
@@ -57,9 +64,16 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
-    def update_movie(self, user_id, movie_id, rating):
+    def update_rating(self, user_id, movie_id, rating):
         """
         Updates an existing movie in the database.
+        """
+        pass
+
+    @abstractmethod
+    def update_movie(self, updated_movie) -> bool:
+        """
+        Updates the movie details in the database.
         """
         pass
 

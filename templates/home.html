@@ -11,5 +11,14 @@
         <a href="/users" class="button">User list</a><br>
         <a href="/add_user" class="button">Add user</a><br>
       </div>
+
+    <h2>Movies in the database</h2>
+    <div class="movies-grid">
+        {% for movie in movies %}
+        <article class="movie">
+            <img src="{{ movie.poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
+        </article>
+        {% endfor %}
+    </div>
 </body>
 </html>

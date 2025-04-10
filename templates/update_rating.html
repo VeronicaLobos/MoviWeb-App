@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update user rating</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form" id="Form">
+        <h2>Update User Rating</h2>
+        <form action="/users/{{ user_id }}/update_rating/{{ movie_id }}" method="POST">
+            <label for="rating">Rating:</label>
+            <input type="text" id="rating" name="rating" placeholder="7.9" required><br><br>
+            <input type="submit" value="Update Rating" class="button">
+        </form>
+    </div>
+    {% if message %}
+    <div id="Message">
+        <p>{{ message }}</p>
+    </div>
+    {% endif %}
+    <div id="links">
+        <a href="/users" class="button">Return to users list</a><br>
+        <a href="/home" class="button">Return home</a><br>
+    </div>
+</body>
+</html>
