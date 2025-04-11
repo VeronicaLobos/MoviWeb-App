@@ -1,13 +1,45 @@
 """
-This is a Flask application that connects to a SQLite database
-and manages user and movie data using SQLAlchemy.
-* Creates the database and tables if they don't exist.
-* It defines several API endpoints to interact with the database,
-by calling the methods of the DataManagerSQLite class.
+*** Movie Web App ***
+========================
+
+This is a Restful API for a Movie Web App that allows users to
+manage a list with their favorite movies and give a rating to
+each movie, as well as retrieve movie details from the OMDb API
+and edit the movie information.
+
+This program is a learning project for the Software Engineering
+Bootcamp at MasterSchool. It showcases what I have learned
+about Python programming, API and web development.
+A step-by-step guide is included to help you understand how the
+code has been implemented.
+
+Author: https://github.com/VeronicaLobos
+Date: 2025-April-11
+
+
+App Key Features:
+ - Restful API architecture with CRUD operations for managing
+    movies and users.
+ - The API is built using Flask and SQLAlchemy, and it uses
+    SQLite as the database.
+ - Endpoints for adding, updating, and deleting movies, adding
+    users, adding user ratings, and retrieving movie details
+    and user ratings.
+ - The API also fetches movie data from the OMDb API using the
+    omdb_data_fetcher module (requires an API key).
+ - SSR (Server-Side Rendering) is used to render HTML jinja2
+    templates for the web application.
+ - DAL (Data Access Layer) is implemented using SQLAlchemy ORM
+    with SQLite, through the DataManagerSQLite class, for
+    managing database operations.
+ - OOP (Object-Oriented Programming) is used to define the
+    User and Movie classes, which represent the database tables.
+ - The app is designed to be modular and easy to extend
+    with additional features in the future.
 """
 
 """
-Step 1. Import necessary modules
+[Step 1] Import necessary modules
 """
 
 from flask import Flask, request, render_template
@@ -18,7 +50,7 @@ from datamanager.data_manager_sqlite import DataManagerSQLite
 from omdb_data_fetcher import get_new_movie_data as data_fetcher
 
 """
-Step 2. Initialize the Flask application 
+[Step 2] Initialize the Flask application 
 and SQLAlchemy database connection:
 - Initialize and configure the Flask application.............[√]
 - Create the database path...................................[√]
@@ -32,8 +64,9 @@ the app and database.........................................[√]
 app = Flask(__name__, static_folder='_static')
 
 database_path = os.path.join(os.path.dirname(__file__),
-                             'data','moviewebapp.sqlite')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}'
+                                'data','moviewebapp.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+                                f'sqlite:///{database_path}'
 
 db.init_app(app)
 data_manager = DataManagerSQLite(app, db)
@@ -48,23 +81,35 @@ with app.app_context():
 
 
 """
-Step 3. Define the API endpoints:
-- 1. Define the home route ......................[√]
-- 2. Define the route to list all users..........[√]
-- 3. Define the route to list user movies........[√]
-- 4. Define the route to add a user..............[√]
-- 5. Define the route to add a movie.............[√]
-- 6. Define the route to update a movie..........[√]
-- Extra. Define the route to update a rating.....[√]
-- 7. Define the route to delete a movie..........[√]
-- Extra. Define the route to get movie details...[√]
+[Step 3] Define the API endpoints:
+- 1. Define the home route ..................................[√]
+    · Fetches all movies from the db
+- 2. Define the route to list all users......................[√]
+    · Fetches all users and avatars from the db
+- 3. Define the route to list user movies....................[√]
+    · Fetches all movies associated with a user
+- 4. Define the route to add a user..........................[√]
+    · Adds a new user to the db
+- 5. Define the route to add a movie.........................[√]
+    · Adds a new movie and user rating to the db
+- 6. Define the route to update a movie......................[√]
+    · Updates a movie information in the db
+- Extra. Define the route to update a rating.................[√]
+    · Updates a user rating for a movie in the db
+- 7. Define the route to delete a movie......................[√]
+    · Deletes a movie from the user's list,
+      and from the db if no other user has rated it
+- Extra. Define the route to get movie details...............[√]
+    · Fetches a movie's details from the db
 """
 
 @app.route('/home')
 def home():
     """
-    Renders the home page of the application with a welcome message.
-    and buttons to navigate to different sections of the application.
+    Renders the home page of the application with a welcome
+    message, buttons to navigate to different sections
+    of the application, and all movie posters in the database
+    displayed in a grid format with links to their details.
     """
     message = "Welcome to the Movie Web App!"
 
@@ -78,9 +123,9 @@ def home():
 @app.route('/users')
 def list_all_users():
     """
-    Returns a render of the users.html template with
-    a list of all users in the database, each linked to
-    their respective movie lists.
+    Returns a render of the users template with a list of all
+    users in the database, each linked to their respective
+    movie lists.
     If no users are found, it returns a 404 error with a message.
     """
     user_list = data_manager.get_all_users()
@@ -142,8 +187,15 @@ def add_user():
     """
     if request.method == 'POST':
         # Get the data from the form (string) and create a new User object
+        if 'avatar_url' in request.form and request.form['avatar_url']:
+            avatar_url = request.form['avatar_url']
+        else:
+            avatar_url = (f"https://gravatar.com/userimage/12498767/"
+                          f"cf086b8eb3c9ffbc5147271157598803.jpeg?size=256")
+
         new_user_obj = User(
-            user_name=request.form.get('user_name')
+            user_name=request.form.get('user_name'),
+            avatar_url=avatar_url
         )
         # Call the add_user method to add the new user to the database
         new_user_exists = data_manager.add_user(new_user_obj)
@@ -332,6 +384,7 @@ def delete_movie(user_id, movie_id):
                                message=message,
                                user_id=user_id,
                                movie_id=movie_id), 404
+
 
 @app.route('/movie/<movie_id>')
 def movie_details(movie_id):

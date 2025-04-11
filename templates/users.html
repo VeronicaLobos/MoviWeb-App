@@ -9,16 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Users</h1>
-    <div class="movie-details">
-        <ul>
-        {% for user in user_list %}
-            <li><a href="/users/{{ user.user_id }}"><h3>{{ user.user_name }}</h3></a></li>
-        {% endfor %}
-        </ul>
-    </div>
+    <h1>Users in the database</h1>
     <div id="links">
-        <a href="/home" class="button">Return home</a><br>
+        <a href="/home" class="button">Return home</a>
+        <a href="/add_user" class="button">Add user</a>
+    </div>
+    <div class="movies-grid">
+        {% for user in user_list %}
+        <article class="movie-grid article">
+            <a href="/users/{{ user.user_id }}">
+                <img src="{{ user.avatar_url }}" alt="User Icon" height="80" width="80">
+            </a><h3>{{ user.user_name }}</h3>
+        </article>
+        {% endfor %}
     </div>
 </body>
 </html>

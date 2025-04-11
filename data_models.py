@@ -15,12 +15,13 @@ class User(db.Model):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.String, nullable=False)
+    avatar_url = db.Column(db.String)
 
     # Establish relationship with UserMovies table
     user_movies = db.relationship('UserMovie', backref='user_relation')
 
     def __str__(self):
-        return f"User: {self.user_name}"
+        return f"User: {self.user_name}, Avatar URL: {self.avatar_url}"
 
 
 class Movie(db.Model):
