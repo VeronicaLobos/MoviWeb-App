@@ -25,10 +25,13 @@ App Key Features:
  - Endpoints for adding, updating, and deleting movies, adding
     users, adding user ratings, and retrieving movie details
     and user ratings.
+ - Input validation in templates to ensure that the user
+    provides valid data before submitting the form.
  - The API also fetches movie data from the OMDb API using the
     omdb_data_fetcher module (requires an API key).
  - SSR (Server-Side Rendering) is used to render HTML jinja2
-    templates for the web application.
+    templates for the web application, and a stylesheet
+    (style.css) with a responsive minimalist design is included.
  - DAL (Data Access Layer) is implemented using SQLAlchemy ORM
     with SQLite, through the DataManagerSQLite class, for
     managing database operations.
@@ -37,29 +40,22 @@ App Key Features:
  - The app is designed to be modular and easy to extend
     with additional features in the future.
 """
-
-"""
-[Step 1] Import necessary modules
-"""
-
-from flask import Flask, request, render_template
 import os
 import webbrowser
+from flask import Flask, request, render_template
 from data_models import db, User, Movie
 from datamanager.data_manager_sqlite import DataManagerSQLite
 from omdb_data_fetcher import get_new_movie_data as data_fetcher
 
-"""
-[Step 2] Initialize the Flask application 
-and SQLAlchemy database connection:
-- Initialize and configure the Flask application.............[√]
-- Create the database path...................................[√]
-- Set the SQLAlchemy database URI............................[√]
-- Initialize the SQLAlchemy instance with the Flask app......[√]
-- Initialize the DataManagerSQLite instance by passing
-the app and database.........................................[√]
-- Create the database and tables if they don't exist.........[√]
-"""
+# [Step 1] Initialize the Flask application
+# and SQLAlchemy database connection:
+# - Initialize and configure the Flask application.............[√]
+# - Create the database path...................................[√]
+# - Set the SQLAlchemy database URI............................[√]
+# - Initialize the SQLAlchemy instance with the Flask app......[√]
+# - Initialize the DataManagerSQLite instance by passing
+# the app and database.........................................[√]
+# - Create the database and tables if they don't exist.........[√]
 
 app = Flask(__name__, static_folder='_static')
 
@@ -80,28 +76,26 @@ with app.app_context():
             db.create_all()
 
 
-"""
-[Step 3] Define the API endpoints:
-- 1. Define the home route ..................................[√]
-    · Fetches all movies from the db
-- 2. Define the route to list all users......................[√]
-    · Fetches all users and avatars from the db
-- 3. Define the route to list user movies....................[√]
-    · Fetches all movies associated with a user
-- 4. Define the route to add a user..........................[√]
-    · Adds a new user to the db
-- 5. Define the route to add a movie.........................[√]
-    · Adds a new movie and user rating to the db
-- 6. Define the route to update a movie......................[√]
-    · Updates a movie information in the db
-- Extra. Define the route to update a rating.................[√]
-    · Updates a user rating for a movie in the db
-- 7. Define the route to delete a movie......................[√]
-    · Deletes a movie from the user's list,
-      and from the db if no other user has rated it
-- Extra. Define the route to get movie details...............[√]
-    · Fetches a movie's details from the db
-"""
+# [Step 2] Define the API endpoints:
+# - 1. Define the home route ..................................[√]
+#     · Fetches all movies from the db
+# - 2. Define the route to list all users......................[√]
+#     · Fetches all users and avatars from the db
+# - 3. Define the route to list user movies....................[√]
+#     · Fetches all movies associated with a user
+# - 4. Define the route to add a user..........................[√]
+#     · Adds a new user to the db
+# - 5. Define the route to add a movie.........................[√]
+#     · Adds a new movie and user rating to the db
+# - 6. Define the route to update a movie......................[√]
+#     · Updates a movie information in the db
+# - Extra. Define the route to update a rating.................[√]
+#     · Updates a user rating for a movie in the db
+# - 7. Define the route to delete a movie......................[√]
+#     · Deletes a movie from the user's list,
+#       and from the db if no other user has rated it
+# - Extra. Define the route to get movie details...............[√]
+#     · Fetches a movie's details from the db
 
 @app.route('/home')
 def home():
@@ -126,16 +120,16 @@ def list_all_users():
     Returns a render of the users template with a list of all
     users in the database, each linked to their respective
     movie lists.
-    If no users are found, it returns a 404 error with a message.
+    If no users are found, it returns a message.
     """
     user_list = data_manager.get_all_users()
 
     if user_list:
         return render_template('users.html',
                                user_list=user_list), 200
-    else:
-        message = "No users found in the database."
-        return render_template('users.html',
+
+    message = "No users found in the database."
+    return render_template('users.html',
                                message=message), 404
 
 
@@ -143,29 +137,38 @@ def list_all_users():
 def list_user_movies(user_id):
     """
     Returns a list of all movies associated with a given user.
+    along with the user rating for each movie.
+    Each  movie is linked to its details page.
+    Each  movie has a button for:
+    · updating the movie information
+    · updating the user rating
+    · deleting the movie from the user's list
 
-    - Queries the database for all movies associated with the user
-    by calling the get_user_movies method of the DataManagerSQLite instance.
-    - Queries the database for the user_name associated with the user_id.
+    - Queries the database for all movies associated with the
+    user by calling the get_user_movies method of the
+    DataManagerSQLite instance.
+    - Queries the database for the user_name associated with
+    the user_id.
 
     Returns a render of the user_movies.html template with
-    the list of movies containing the movie name and rating, and the user_id.
+    the list of movies containing the movie name and rating,
+    the user_id and the user_name.
+    If no movies are found for the user, it renders the template
+    with a message indicating that no movies were found.
     """
-    # Get the user_movies from the database with the user_id
     user_movies = data_manager.get_user_movies(user_id)
-    # Get the user_name from the database with the user_id
     user_name = data_manager.get_user_name(user_id)
 
     if user_movies:
-        # Extract the movie objects and their ratings
+        # Extract the movie (Movie) and their ratings (int)
         user_movies = [(movie[0], movie[1]) for movie in user_movies]
         return render_template('user_movies.html',
                                user_id=user_id,
                                user_movies=user_movies,
                                user_name=user_name), 200
-    else:
-        message = "No movies found for this user."
-        return render_template('user_movies.html',
+
+    message = "No movies found for this user."
+    return render_template('user_movies.html',
                                user_id=user_id,
                                message=message,
                                user_name=user_name), 404
@@ -176,38 +179,39 @@ def add_user():
     """
     Adds a new user to the database.
 
-    If a GET request is made, it renders the  add_user.html template.
+    * If a GET request is made, it renders the add_user.html
+    template with a form to add a new user.
 
-    If a POST request is made, it retrieves the user data from the request,
-    creates a new User object with it, and adds it to the database by calling
-    the add_user method of the DataManagerSQLite instance.
+    * If a POST request is made, it retrieves the user data
+    from the request form, creates a new User object with it,
+    and adds it to the database by calling the add_user method
+    of the DataManagerSQLite instance.
 
-    Returns a render of the add_user.html template with a success message,
-    or an error message if the user already exists.
+    Returns a render of the add_user.html template with a success
+    message, or a message indicating that the user already exists.
     """
     if request.method == 'POST':
-        # Get the data from the form (string) and create a new User object
         if 'avatar_url' in request.form and request.form['avatar_url']:
             avatar_url = request.form['avatar_url']
+
         else:
-            avatar_url = (f"https://gravatar.com/userimage/12498767/"
-                          f"cf086b8eb3c9ffbc5147271157598803.jpeg?size=256")
+            # If no avatar_url is provided, use a default one
+            avatar_url = ("https://gravatar.com/userimage/12498767/"
+                "cf086b8eb3c9ffbc5147271157598803.jpeg?size=256")
 
         new_user_obj = User(
             user_name=request.form.get('user_name'),
             avatar_url=avatar_url
         )
-        # Call the add_user method to add the new user to the database
+
         new_user_exists = data_manager.add_user(new_user_obj)
-        # Check if the user already exists, if not, add the user
+
         if new_user_exists:
-            # new_user_exists is True if the user was added successfully
             message = f"User {new_user_obj.user_name} added successfully!"
             return render_template('add_user.html', message=message), 201
-        else:
-            # new_user_exists is None if the user already exists
-            message = f"User {new_user_obj.user_name} already exists."
-            return render_template('add_user.html', message=message), 400
+
+        message = f"User {new_user_obj.user_name} already exists."
+        return render_template('add_user.html', message=message), 400
 
     return render_template('add_user.html')
 
@@ -217,18 +221,22 @@ def add_movie(user_id):
     """
     Adds a new movie to the database.
 
-    If a GET request is made, it renders the add_movie.html template.
+    * If a GET request is made, it renders the add_movie.html
+     template with a form to add a new movie.
+     - Only users with a user_id can add movies to the database.
 
-    If a POST request is made:
-    - it retrieves the movie name and the rating
-    by the user associated to that id from the request form.
-    - calls data_fetcher to fetch the movie data from the OMDb API.
-    - a Movie object is returned (if the movie is found in the API).
-    - calls the add_movie method of the DataManagerSQLite instance
-    to add the movie to the database.
+    * If a POST request is made:
+    - It retrieves the movie name and the rating by the user
+      associated to that id from the request form.
+    - Calls data_fetcher to fetch the movie data from the OMDb API.
+    - A Movie object is returned (if the movie is found in the API).
+    - Calls the add_movie method of the DataManagerSQLite instance
+      to add the movie to the database:
         - If the movie already exists, it will not be added again.
         - It checks if there is already a rating for the movie
-        with that user_id and movie_id in the UserMovies table.
+          with that user_id and movie_id in the UserMovies table.
+        - If the user already rated the movie, it will not be added
+          again.
 
     Returns:
         If the movie is added successfully, it returns a render
@@ -240,7 +248,6 @@ def add_movie(user_id):
         is not found.
     """
     if request.method == 'POST':
-        ## Create a new Movie object
         movie_name = request.form.get('movie_name')
         rating = request.form.get('rating')
         new_movie_obj = data_fetcher(movie_name)
@@ -258,18 +265,15 @@ def add_movie(user_id):
         new_movie_exists = data_manager.add_movie(new_movie_obj,
                                                   user_id, rating)
 
-        # Check if the movie was added successfully:
-        # new_movie_exists is True if the movie was added
-        # successfully or False if the movie already exists
         if new_movie_exists:
             message = (f"Movie {new_movie_obj.movie_name} added successfully"
                        f" with rating {rating}!")
             return render_template('add_movie.html',
                                    message=message,
                                    user_id=user_id), 201
-        elif new_movie_exists is None:
-            message = f"Movie {new_movie_obj.movie_name} already exists."
-            return render_template('add_movie.html',
+
+        message = f"Movie {new_movie_obj.movie_name} already exists."
+        return render_template('add_movie.html',
                                    message=message,
                                    user_id=user_id), 400
 
@@ -281,12 +285,23 @@ def update_rating(user_id, movie_id):
     """
     This route will display a form allowing for the updating
     of details of a specific movie in a user’s list.
+
+    * If a GET request is made, it renders the update_rating.html
+    template with a form to update the rating of a movie.
+
+    * If a POST request is made:
+    - It retrieves the updated rating from the request form.
+    - Calls the update_rating method of the DataManagerSQLite
+      instance to update the rating of the movie in the database.
+
+    Returns:
+        - It renders the redirect.html template with a
+        message informing the user with the resulting operation,
+        either the movie was updated successfully or not found.
     """
     if request.method == "POST":
-        # Get the updated movie data from the form
         rating = request.form.get('rating')
 
-        # Get the movie name from the database
         movie = data_manager.get_movie(movie_id)
 
         updated_movie = data_manager.update_rating(user_id,
@@ -301,6 +316,14 @@ def update_rating(user_id, movie_id):
                                    user_id=user_id,
                                    movie_id=movie_id), 200
 
+        status = "Movie not found"
+        message = f"Movie {movie.movie_name} not found."
+        return render_template('redirect.html',
+                                   status=status,
+                                   message=message,
+                                   user_id=user_id,
+                                   movie_id=movie_id), 404
+
     return render_template('update_rating.html',
                             user_id=user_id, movie_id=movie_id)
 
@@ -309,14 +332,31 @@ def update_rating(user_id, movie_id):
 def update_movie(user_id, movie_id):
     """
     This route will display a form allowing for the updating
-    of details of a specific movie in a user’s list.
+    of details of a specific movie. Update requires a user id,
+    this way only registered users can update the movies in
+    the database (it also allows tracking who made the changes).
+
+    * If a GET request is made, it renders the update_movie.html
+    template with a form to update the movie details.
+
+    * If a POST request is made:
+    - It retrieves the current movie object from the database
+      (with the given movie_id parameter in the URL).
+    - If the movie exists in the database: it retrieves the
+      updated movie details from the request form (only the
+      fields that have been filled out by the user will be
+      updated), and updates the movie object with the new values.
+    - Calls the update_movie method of the DataManagerSQLite
+      instance to update the movie in the database.
+
+    Returns:
+        It renders the redirect.html template with a
+        message informing the user with the resulting operation,
+        either the movie was updated successfully or not found.
     """
     if request.method == "POST":
-        # Get the current movie object from the database
         movie_to_update = data_manager.get_movie(movie_id)
 
-        # If the corresponding field is not empty,
-        # update the movie attribute with the new value
         if movie_to_update:
             if 'movie_name' in request.form and request.form['movie_name']:
                 movie_to_update.movie_name = request.form['movie_name']
@@ -339,20 +379,17 @@ def update_movie(user_id, movie_id):
                                    message=message,
                                    user_id=user_id,
                                    movie_id=movie_id), 200
-        else:
-            status = "Movie not found"
-            message = f"Movie with ID {movie_to_update.movie_name} not found."
-            return render_template('redirect.html',
+
+        status = "Movie not found"
+        message = f"Movie with ID {movie_to_update.movie_name} not found."
+        return render_template('redirect.html',
                                    status=status,
                                    message=message,
                                    user_id=user_id,
                                    movie_id=movie_id), 404
 
     ## If the method is 'GET'
-    # Get the updated movie data from the form
     movie = data_manager.get_movie(movie_id)
-    # Render the template with the current movie data in the
-    # form's placeholders
     return render_template('update_movie.html',
                             user_id=user_id,
                             movie_id=movie_id,
@@ -364,6 +401,8 @@ def delete_movie(user_id, movie_id):
     """
     Upon visiting this route, a specific movie will be removed
     from a user’s favorite movie list.
+
+    * Only registered users can delete movies from the database
     """
     # Call the delete_movie method to delete the movie from the database
     # should return the deleted movie name
@@ -376,10 +415,10 @@ def delete_movie(user_id, movie_id):
                                message=message,
                                user_id=user_id,
                                movie_id=movie_id), 200
-    else:
-        status = "Movie not found"
-        message = f"Movie with ID {movie_id} not found."
-        return render_template('redirect.html',
+
+    status = "Movie not found"
+    message = f"Movie with ID {movie_id} not found."
+    return render_template('redirect.html',
                                status=status,
                                message=message,
                                user_id=user_id,
@@ -395,14 +434,13 @@ def movie_details(movie_id):
     if movie:
         return render_template('movie_info.html',
                                movie=movie), 200
-    else:
-        message = "Movie not found."
-        return render_template('movie_info.html',
+
+    message = "Movie not found."
+    return render_template('movie_info.html',
                                message=message), 404
 
 
 if __name__ == '__main__':
-    # Run the Flask application and open the web browser
-    url = 'http://127.0.0.1:5002/home'
-    webbrowser.open_new(url)
+    URL = 'http://127.0.0.1:5002/home'
+    webbrowser.open_new(URL)
     app.run(port=5002, debug=True)

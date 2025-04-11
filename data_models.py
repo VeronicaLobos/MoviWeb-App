@@ -1,10 +1,30 @@
+"""
+This module defines the data models for the Flask application using
+SQLAlchemy.
+It is designed to be used with Flask-SQLAlchemy, a Flask extension
+that adds support for SQLAlchemy to Flask applications.
+
+It includes three classes:
+- The `User` class represents a user in the database, with attributes
+  for user ID, username, and avatar URL.
+- The `Movie` class represents a movie, with attributes for movie ID,
+  movie name, director, year, genre, poster URL, and plot.
+- The `UserMovie` class represents the association between a user and
+  a movie, with attributes for the association ID, user ID, movie ID,
+  and rating.
+
+Each class is a subclass of `db.Model`, which is the base class for
+all models in Flask-SQLAlchemy.
+"""
+
+
 from flask_sqlalchemy import SQLAlchemy
 
-# Flask-SQLAlchemy instance, which will be used to initialize the database
-# and manage the models in app.py
+# Flask-SQLAlchemy instance, which will be used to initialize
+# the database and manage the models in app.py
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a user in the database.
 
@@ -24,7 +44,7 @@ class User(db.Model):
         return f"User: {self.user_name}, Avatar URL: {self.avatar_url}"
 
 
-class Movie(db.Model):
+class Movie(db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a movie in the database.
 
@@ -54,11 +74,11 @@ class Movie(db.Model):
                 f"Director: {self.director}, "
                 f"Year: {self.year}, "
                 f"Genre: {self.genre}, "
-                f"Poster URL: {self.poster_url}",
+                f"Poster URL: {self.poster_url}, "
                 f"Plot: {self.plot}")
 
 
-class UserMovie(db.Model):
+class UserMovie(db.Model): # pylint: disable=too-few-public-methods
     """
     Associates a user with one or several movies (one-to-many
     relationship).

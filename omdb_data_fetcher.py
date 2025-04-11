@@ -6,10 +6,10 @@ a RESTful web service to obtain movie information.
 
 import os
 import json
+import time
 import requests as req
 from dotenv import load_dotenv
 import urllib3.exceptions
-import time
 
 from data_models import Movie
 
@@ -36,7 +36,7 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
 
     while retries < max_retries:
         try:
-            response = req.get(url)
+            response = req.get(url, timeout=10)
             response.raise_for_status()
             print(f"Requesting '{movie_name}' to {url} (Attempt {retries + 1})")
             json_string = response.text
@@ -57,8 +57,8 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
                 break
         except req.exceptions.ConnectionError as e:
             if isinstance(e.args[0], urllib3.exceptions.NameResolutionError):
-                print(f"Name Resolution Error: Could not resolve the address for OMDb API. "
-                      f"Please check your internet connection.")
+                print("Name Resolution Error: Could not resolve the address for OMDb API. "
+                      "Please check your internet connection.")
             else:
                 print(f"Connection Error: {e}")
             break
@@ -75,7 +75,7 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
     return {}
 
 
-def get_new_movie_data(movie_name):
+def get_new_movie_data(movie_name: str) -> Movie:
     """
     Fetches and formats movie data from the OMDb API.
 
@@ -110,15 +110,15 @@ def get_new_movie_data(movie_name):
         except UnboundLocalError as e:
             print(f"UnboundLocalError while creating Movie object: {e}")
 
-    if movie_info == {}:
+    else:
         print("Could not fetch the movie data")
         return None
 
 
 if __name__ == "__main__":
     # Example usage
-    movie_title = "The Shawshank Redemption"
-    movie_data = get_new_movie_data(movie_title)
+    MOVIE_TITLE = "The Shawshank Redemption"
+    movie_data = get_new_movie_data(MOVIE_TITLE)
     if movie_data:
         print(f"Movie Name: {movie_data.movie_name}")
         print(f"Year: {movie_data.year}")

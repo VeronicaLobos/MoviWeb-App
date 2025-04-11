@@ -14,6 +14,11 @@
         <a href="/home" class="button">Return home</a>
         <a href="/add_user" class="button">Add user</a>
     </div>
+    {% if message %}
+    <div id="Message">
+        <h3>{{ message }}</h3>
+    </div>
+    {% endif %}
     <div class="movies-grid">
         {% for user in user_list %}
         <article class="movie-grid article">
