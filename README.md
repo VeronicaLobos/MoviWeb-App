@@ -2,32 +2,67 @@
 
 ## About this Project
 
-This is a simple Flask application that uses SQLAlchemy to manage a movie database. Currently, a Work in Progress.
+This is a Restful API for a Movie Web App that allows users to
+manage a list with their favorite movies and give a rating to
+each movie, as well as retrieve movie details from the OMDb API
+and edit the movie information.
 
-## Core Functionalities
+This program is a learning project for the Software Engineering
+Bootcamp at MasterSchool. It showcases what I have learned
+about Python programming, API and web development.
+A step-by-step guide is included to help you understand how the
+code has been implemented.
 
-_User Selection:_ The ability for a user to select their identity from a list of users.  
+## Features
 
-_Movie Management:_ After a user is selected, the application will display a list of their favorite movies. From here, users should be able to:  
+ - Restful API architecture with CRUD operations for managing
+    movies and users.
+ - The API is built using Flask and SQLAlchemy, and it uses
+    SQLite as the database.
+ - Endpoints for adding, updating, and deleting movies, adding
+    users, adding user ratings, and retrieving movie details
+    and user ratings.
+ - Input validation in templates to ensure that the user
+    provides valid data before submitting the form.
+ - The API also fetches movie data from the OMDb API using the
+    omdb_data_fetcher module (requires an API key).
+ - SSR (Server-Side Rendering) is used to render HTML jinja2
+    templates for the web application, and a stylesheet
+    (style.css) with a responsive minimalist design is included.
+ - DAL (Data Access Layer) is implemented using SQLAlchemy ORM
+    with SQLite, through the DataManagerSQLite class, for
+    managing database operations.
+ - OOP (Object-Oriented Programming) is used to define the
+    User and Movie classes, which represent the database tables.
+ - The app is designed to be modular and easy to extend
+    with additional features in the future.
 
-- Add a new movie: Movie's name, director, year of release, and rating.  
-- Delete a movie: Remove a movie from the user's list.  
-- Update a movie: Modify the details of an existing movie from the user's list.  
-- List all movies: Display all movies in the user's list.  
-
-_Data Source Management:_ Use a Python class to manage the data source.
-
-## Application Structure
-
-Key parts of the application:  
-- _User Interface (UI):_ An intuitive web interface built using Flask, HTML, and CSS. It will provide forms for adding, updating, and deleting movies, as well as a method to select a user.  
-- _A Python class:_ To handle operations related to the data source. This class exposes functions for getting all users, getting a user’s movies, and updating a user’s movie.  
-- _A database (SQLite):_ For storing user and movie data. The database will be created and managed using SQLAlchemy, an ORM for Python.
 
 ```plaintext
 MovieWeb-App/
-├── requirements.txt
-README.md <!-- This file -->
+├── .idea/
+├── static/
+│   └── style.css
+├── datamanager/
+│   ├── __init__.py
+│   ├── data_manager_interface.py
+│   ├── data_manager_sqlite.py
+├── templates/
+│   ├── add_movie.html
+│   ├── add_user.html
+│   ├── home.html
+│   ├── movie_info.html
+│   ├── redirect.html
+│   ├── update_movie.html
+│   ├── update_rating.html
+│   ├── user_movies.html
+│   └── users.html
+├── .env  >>> my_api_key="..."
+├── app.py
+├── data_models.py
+├── omdb_data_fetcher.py
+├── README.md  * you are here *
+└── requirements.txt
 ```
 
 ### Classes for Database Management

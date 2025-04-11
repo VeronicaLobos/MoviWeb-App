@@ -15,7 +15,9 @@ code has been implemented.
 
 Author: https://github.com/VeronicaLobos
 Date: 2025-April-11
-
+Version: 1.0
+License: Non-commercial use only
+========================
 
 App Key Features:
  - Restful API architecture with CRUD operations for managing
@@ -439,6 +441,7 @@ def movie_details(movie_id):
     return render_template('movie_info.html',
                                message=message), 404
 
+# [Step 3] Define the main function to run the Flask application
 
 if __name__ == '__main__':
     URL = 'http://127.0.0.1:5002/home'
