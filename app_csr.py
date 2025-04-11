@@ -43,8 +43,12 @@ App Key Features:
     with additional features in the future.
 """
 import os
+import logging
 import webbrowser
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from data_models import db, User, Movie
 from datamanager.data_manager_sqlite import DataManagerSQLite
 from omdb_data_fetcher import get_new_movie_data as data_fetcher
@@ -60,6 +64,12 @@ from omdb_data_fetcher import get_new_movie_data as data_fetcher
 # - Create the database and tables if they don't exist.........[√]
 
 app = Flask(__name__)
+CORS(app)
+limiter = Limiter(app=app, key_func=get_remote_address)
+logging.basicConfig(level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filename='my_log_file_csr.log')
 
 database_path = os.path.join(os.path.dirname(__file__),
                                 'data','movieapi.sqlite')
@@ -143,6 +153,7 @@ def _validate_movie_data(movie_to_update, current_movie):
 
 
 @app.route('/home')
+@limiter.limit("10/minute")
 def home():
     """
     Returns a welcome message and a list of all
@@ -170,6 +181,7 @@ def home():
 
 
 @app.route('/users')
+@limiter.limit("10/minute")
 def list_all_users():
     """
     Returns a list of all users in the database,
@@ -192,6 +204,7 @@ def list_all_users():
 
 
 @app.route('/users/<int:user_id>')
+@limiter.limit("10/minute")
 def list_user_movies(user_id):
     """
     Returns a list of all movies associated with a given user,
@@ -227,6 +240,7 @@ def list_user_movies(user_id):
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
+@limiter.limit("1/minute")
 def add_user():
     """
     Adds a new user to the database.
@@ -269,6 +283,7 @@ def add_user():
 
 @app.route('/users/<int:user_id>/add_movie',
                          methods=['GET', 'POST'])
+@limiter.limit("1/minute")
 def add_movie(user_id):
     """
     Adds a new movie to the user's list of favorite movies.
@@ -333,6 +348,7 @@ def add_movie(user_id):
 
 @app.route('/users/<int:user_id>/update_rating/<int:movie_id>',
                                             methods=['GET', 'POST'])
+@limiter.limit("1/minute")
 def update_rating(user_id, movie_id):
     """
     Updates the rating of a specific movie in the user's
@@ -382,6 +398,7 @@ def update_rating(user_id, movie_id):
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>',
                                             methods=['GET', 'POST'])
+@limiter.limit("1/minute")
 def update_movie(user_id, movie_id):
     """
     This route allows a user to update the details of a
@@ -454,6 +471,7 @@ def update_movie(user_id, movie_id):
 
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>',
                                                   methods=['POST'])
+@limiter.limit("1/minute")
 def delete_movie(user_id, movie_id):
     """
     This route allows a user to delete a specific movie
@@ -493,23 +511,44 @@ def delete_movie(user_id, movie_id):
 
 
 @app.route('/movie/<movie_id>')
+@limiter.limit("10/minute")
 def movie_details(movie_id):
     """
     Returns the details of a specific movie,
     or a message indicating that the movie was not found.
     """
-    movie = data_manager.get_movie(movie_id)
-    if movie:
-        return jsonify(movie_id=movie.movie_id,
-                       movie_name=movie.movie_name,
-                       director=movie.director,
-                       year=movie.year,
-                       genre=movie.genre,
-                       poster_url=movie.poster_url,
-                       plot=movie.plot), 200
+    try:
+        movie = data_manager.get_movie(movie_id)
+        if movie:
+            return jsonify(movie_id=movie.movie_id,
+                           movie_name=movie.movie_name,
+                           director=movie.director,
+                           year=movie.year,
+                           genre=movie.genre,
+                           poster_url=movie.poster_url,
+                           plot=movie.plot), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching movie: {e}")
+        return jsonify(message="Error fetching movie data."), 500
 
     message = f"Movie with ID {movie_id} not found."
     return jsonify(message=message), 404
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """
+    Returns a 404 error message for any invalid URL.
+    """
+    return jsonify(message="This URL is not valid, error 404."), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    """
+    Returns a 500 error message for any server errors.
+    """
+    app.logger.warning(f"Internal server error: {error}")
+    return jsonify(message="Internal server error, error 500."), 500
 
 
 # [Step 3] Define the main function to run the Flask application

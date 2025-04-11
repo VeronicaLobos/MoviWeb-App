@@ -1,6 +1,7 @@
-dotenv
-flask
-flask_sqlalchemy
-SQLAlchemy
-requests
-urllib3
+dotenv~=0.9.9
+flask~=3.1.0
+requests~=2.32.3
+urllib3~=2.3.0
+flask-cors~=5.0.1
+flask-limiter~=3.11.0
+python-dotenv~=1.1.0

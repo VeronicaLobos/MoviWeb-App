@@ -43,6 +43,7 @@ App Key Features:
     with additional features in the future.
 """
 import os
+import logging
 import webbrowser
 from flask import Flask, request, render_template
 from data_models import db, User, Movie
@@ -60,6 +61,10 @@ from omdb_data_fetcher import get_new_movie_data as data_fetcher
 # - Create the database and tables if they don't exist.........[√]
 
 app = Flask(__name__, static_folder='_static')
+logging.basicConfig(level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filename='my_log_file_ssr.log')
 
 database_path = os.path.join(os.path.dirname(__file__),
                                 'data','moviewebapp.sqlite')
@@ -107,6 +112,7 @@ def home():
     of the application, and all movie posters in the database
     displayed in a grid format with links to their details.
     """
+    app.logger.info("Home page accessed")
     message = "Welcome to the Movie Web App!"
 
     movies = data_manager.get_all_movies()
@@ -124,6 +130,7 @@ def list_all_users():
     movie lists.
     If no users are found, it returns a message.
     """
+    app.logger.info("List of all users accessed")
     user_list = data_manager.get_all_users()
 
     if user_list:
@@ -158,6 +165,7 @@ def list_user_movies(user_id):
     If no movies are found for the user, it renders the template
     with a message indicating that no movies were found.
     """
+    app.logger.info(f"List of movies for user {user_id} accessed")
     user_movies = data_manager.get_user_movies(user_id)
     user_name = data_manager.get_user_name(user_id)
 
@@ -193,6 +201,7 @@ def add_user():
     message, or a message indicating that the user already exists.
     """
     if request.method == 'POST':
+        app.logger.info("POST request to add a new user")
         if 'avatar_url' in request.form and request.form['avatar_url']:
             avatar_url = request.form['avatar_url']
 
@@ -210,11 +219,13 @@ def add_user():
 
         if new_user_exists:
             message = f"User {new_user_obj.user_name} added successfully!"
+            app.logger.info(message)
             return render_template('add_user.html', message=message), 201
 
         message = f"User {new_user_obj.user_name} already exists."
         return render_template('add_user.html', message=message), 400
 
+    app.logger.info("GET request to add a new user")
     return render_template('add_user.html')
 
 
@@ -246,30 +257,28 @@ def add_movie(user_id):
         operation.
         Note: by providing the user_id in the render_template,
         it allows the user to resubmit the form. This avoids
-        the flask app from crashing because the route
-        is not found.
+        the flask app from crashing when the route is not found.
     """
     if request.method == 'POST':
+        app.logger.info("POST request to add a new movie by {user_id}")
+
         movie_name = request.form.get('movie_name')
         rating = request.form.get('rating')
         new_movie_obj = data_fetcher(movie_name)
 
-        # If new_movie_obj is None, it means the movie was not found, or
-        # there was an error fetching the data, or no internet connection
         if new_movie_obj is None:
             message = f"Movie {movie_name} not found."
             return render_template('add_movie.html',
                                    message=message,
                                    user_id=user_id), 404
 
-        # If the movie was found, a Movie object is returned
-        # and can be added to the database
         new_movie_exists = data_manager.add_movie(new_movie_obj,
                                                   user_id, rating)
 
         if new_movie_exists:
-            message = (f"Movie {new_movie_obj.movie_name} added successfully"
-                       f" with rating {rating}!")
+            message = (f"Movie {new_movie_obj.movie_name} added "
+                       f"successfully with rating {rating}!")
+            app.logger.info(message)
             return render_template('add_movie.html',
                                    message=message,
                                    user_id=user_id), 201
@@ -279,10 +288,12 @@ def add_movie(user_id):
                                    message=message,
                                    user_id=user_id), 400
 
-    return render_template('add_movie.html', user_id=user_id)
+    return render_template('add_movie.html',
+                           user_id=user_id)
 
 
-@app.route('/users/<int:user_id>/update_rating/<int:movie_id>', methods=['GET', 'POST'])
+@app.route('/users/<int:user_id>/update_rating/<int:movie_id>',
+                                            methods=['GET', 'POST'])
 def update_rating(user_id, movie_id):
     """
     This route will display a form allowing for the updating
@@ -302,6 +313,8 @@ def update_rating(user_id, movie_id):
         either the movie was updated successfully or not found.
     """
     if request.method == "POST":
+        app.logger.info("POST request to update movie rating"
+                        "by {user_id} for movie {movie_id}")
         rating = request.form.get('rating')
 
         movie = data_manager.get_movie(movie_id)
@@ -312,6 +325,7 @@ def update_rating(user_id, movie_id):
         if updated_movie:
             status = "Movie updated"
             message = f"Movie {movie.movie_name} updated successfully!"
+            app.logger.info(message)
             return render_template('redirect.html',
                                    status=status,
                                    message=message,
@@ -357,6 +371,8 @@ def update_movie(user_id, movie_id):
         either the movie was updated successfully or not found.
     """
     if request.method == "POST":
+        app.logger.info("POST request to update movie details"
+                        "by {user_id} for movie {movie_id}")
         movie_to_update = data_manager.get_movie(movie_id)
 
         if movie_to_update:
@@ -376,6 +392,7 @@ def update_movie(user_id, movie_id):
         if updated_movie_name:
             status = "Movie updated"
             message = f"Movie {updated_movie_name} updated successfully!"
+            app.logger.info(message)
             return render_template('redirect.html',
                                    status=status,
                                    message=message,
@@ -390,7 +407,6 @@ def update_movie(user_id, movie_id):
                                    user_id=user_id,
                                    movie_id=movie_id), 404
 
-    ## If the method is 'GET'
     movie = data_manager.get_movie(movie_id)
     return render_template('update_movie.html',
                             user_id=user_id,
@@ -408,10 +424,13 @@ def delete_movie(user_id, movie_id):
     """
     # Call the delete_movie method to delete the movie from the database
     # should return the deleted movie name
+    app.logger.info("POST request to delete movie"
+                    "by {user_id} for movie {movie_id}")
     deleted_movie = data_manager.delete_movie(user_id, movie_id)
     if deleted_movie:
         status = "Movie deleted"
         message = f"Movie {deleted_movie.movie_name} deleted successfully!"
+        app.logger.info(message)
         return render_template('redirect.html',
                                status=status,
                                message=message,
@@ -432,14 +451,44 @@ def movie_details(movie_id):
     """
     Returns the details of a specific movie.
     """
-    movie = data_manager.get_movie(movie_id)
-    if movie:
-        return render_template('movie_info.html',
-                               movie=movie), 200
+    app.logger.info(f"Movie details for movie {movie_id} accessed")
+    try:
+        movie = data_manager.get_movie(movie_id)
+        if movie:
+            return render_template('movie_info.html',
+                                    movie=movie), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching movie: {e}")
+        return render_template('redirect.html',
+                               status='Error 500',
+                               message=e), 500
 
     message = "Movie not found."
     return render_template('movie_info.html',
                                message=message), 404
+
+
+# [Extra] Define the routes for error handling:
+
+@app.errorhandler(404)
+def not_found(error):
+    """
+    Returns a 404 error message for any invalid URL.
+    """
+    status = "Error 404"
+    message = "This URL is not valid."
+    return render_template("redirect.html",
+                           status=status,
+                           message=message), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    """
+    Returns a 500 error message for any server errors.
+    """
+    status = "Error 500"
+    return render_template("redirect.html",
+                        status=status ,error=error), 500
 
 # [Step 3] Define the main function to run the Flask application
 
