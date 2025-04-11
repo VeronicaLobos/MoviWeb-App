@@ -52,13 +52,18 @@ class DataManagerSQLite(DataManagerInterface):
         Retrieves the user_name associated with a given user ID.
 
         Parameters:
-            user_id (int): The ID of the user whose name is to be retrieved.
+            user_id (int): The ID of the user whose name is to
+                           be retrieved.
 
         Returns:
             str: The user_name associated with the given user ID,
-            None: if the user does not exist.
+            None: if the user does not exist, with a message printed
+                  to the console.
         """
         user = User.query.filter_by(user_id=user_id).first()
+        if user is None:
+            print(f"User with ID {user_id} not found.")
+            return None
         return user.user_name
 
 
