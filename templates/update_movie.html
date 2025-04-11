@@ -13,15 +13,15 @@
     <div class="form" id="Form">
         <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="POST">
             <label for="movie_name"><h3>Movie name:</h3></label>
-            <input type="text" id="movie_name" name="rating" placeholder="{{ movie.movie_name }}"><br><br>
+            <input type="text" id="movie_name" name="rating" placeholder="{{ movie.movie_name }}" minlength="1" maxlength="50"><br><br>
             <label for="year"><h3>Year:</h3></label>
-            <input type="text" id="year" name="year" placeholder="{{ movie.year }}"><br><br>
+            <input type="number" id="year" name="year" placeholder="{{ movie.year }}" min="1895" max="2030" minlength="4" maxlength="4"><br><br>
             <label for="director"><h3>Director:</h3></label>
-            <input type="text" id="director" name="director" placeholder="{{ movie.director }}"><br><br>
+            <input type="text" id="director" name="director" placeholder="{{ movie.director }}" minlength="5" maxlength="50"><br><br>
             <label for="genre"><h3>Genre:</h3></label>
-            <input type="text" id="genre" name="genre" placeholder="{{ movie.genre }}"><br><br>
+            <input type="text" id="genre" name="genre" placeholder="{{ movie.genre }}" minlength="5" maxlength="50"><br><br>
             <label for="poster_url"><h3>Poster URL:</h3></label>
-            <input type="text" id="poster_url" name="poster_url" placeholder="{{ movie.poster_url }}"><br><br>
+            <input type="url" id="poster_url" name="poster_url" placeholder="{{ movie.poster_url }}" minlength="20" maxlength="180"><br><br>
             <input type="submit" value="Update Movie" class="button">
         </form>
     </div>

@@ -10,6 +10,9 @@
 </head>
 <body>
     <h1>{{ movie.movie_name }}</h1>
+    <div id="links">
+        <a href="/home" class="button">Return home</a><br>
+    </div>
     <div class="movies-grid">
         <article class="article">
             <img src="{{ movie.poster_url }}" alt="Movie Poster"><br>
@@ -23,14 +26,10 @@
         <strong>Plot:</strong> {{ movie.plot }}<br>
     </div>
         </div>
-
     {% if message %}
     <div id="Message">
         <h3>{{ message }}</h3>
     </div>
     {% endif %}
-    <div id="links">
-        <a href="/home" class="button">Return home</a><br>
-    </div>
 </body>
 </html>
