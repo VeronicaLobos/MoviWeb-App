@@ -1,11 +1,8 @@
 # MovieWeb App: A Flask Movie Web Application
 
-## About this Project
+<img width="642" alt="Screenshot 2025-04-11 at 21 25 33" src="https://github.com/user-attachments/assets/e87f8826-2974-4d76-a9a7-c0586aadf41c" />
 
-This is a Restful API for a Movie Web App that allows users to
-manage a list with their favorite movies and give a rating to
-each movie, as well as retrieve movie details from the OMDb API
-and edit the movie information.
+## About this Project
 
 This program is a learning project for the Software Engineering
 Bootcamp at MasterSchool. It showcases what I have learned
@@ -13,10 +10,27 @@ about Python programming, API and web development.
 A step-by-step guide is included to help you understand how the
 code has been implemented.
 
+## Technologies Used
+
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/python.png" alt="Python" title="Python"/><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/pycharm.png" alt="PyCharm" title="PyCharm"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/flask.png" alt="Flask" title="Flask"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/sqlite.png" alt="SQLite" title="SQLite"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/rest.png" alt="REST" title="REST"/>
+<img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/postman.png" alt="Postman" title="Postman"/>
+
+
 ## Features
 
- - Restful API architecture with CRUD operations for managing
-    movies and users.
+Two versions of the MovieWeb App are provided:
+1. **app_csr.py**: This version is an API. Clients can implement
+their own front-end using the provided endpoints. It is a 
+Client-Side Rendering (CSR) version.
+2. **app_ssr.py**: This version is a Restful API with Server-Side 
+Rendering (SSR) using Flask and Jinja2 templates.
+
+ - CRUD operations for managing movies, users and ratings.
  - The API is built using Flask and SQLAlchemy, and it uses
     SQLite as the database.
  - Endpoints for adding, updating, and deleting movies, adding
@@ -29,6 +43,8 @@ code has been implemented.
  - SSR (Server-Side Rendering) is used to render HTML jinja2
     templates for the web application, and a stylesheet
     (style.css) with a responsive minimalist design is included.
+ - The app is designed to be user-friendly and easy to navigate,
+    with a simple and intuitive interface.
  - DAL (Data Access Layer) is implemented using SQLAlchemy ORM
     with SQLite, through the DataManagerSQLite class, for
     managing database operations.
@@ -36,7 +52,10 @@ code has been implemented.
     User and Movie classes, which represent the database tables.
  - The app is designed to be modular and easy to extend
     with additional features in the future.
+ - Logging is implemented to track operations where a user ID
+    is involved, such as adding or deleting movies.
 
+## Directory Structure
 
 ```plaintext
 MovieWeb-App/
@@ -58,41 +77,13 @@ MovieWeb-App/
 │   ├── user_movies.html
 │   └── users.html
 ├── .env  >>> my_api_key="..."
-├── app.py
+├── app_csr.py
+├── app_ssr.py
 ├── data_models.py
 ├── omdb_data_fetcher.py
 ├── README.md  * you are here *
 └── requirements.txt
 ```
-
-### Classes for Database Management
-
-Class for Database Management Interface and Implementation:
-
-* _DataManagerInterface(ABC) class:_  
-This is an abstract base class that defines the interface for the DataManager using Pythons ```abc``` module. The DataManager interface specifies a few methods that must be implemented by any concrete DataManager class. The methods include:
-  - get_all_users(), abstract method
-  - get_user_movies(user_id), abstract method
-  - add_movie(user_id, movie)
-  - delete_movie(user_id, movie_id)
-  - update_movie(user_id, movie_id, updated_movie)<br>   
-
-* _DataManager class (SQLite):_  
-This class implements the DataManagerInterface and provides concrete implementations for the methods defined in the interface. It uses SQLAlchemy to interact with the SQLite database. The class inherits from the DataManagerInterface and implements the methods to manage the database. The class also includes a constructor that initializes the database connection and creates the tables if they do not exist.
-
-Database Models are defined using SQLAlchemy ORM. The User and Movie classes represent the database tables.
-
-* _User class:_ Each User instance will have:  
-  - a unique ID (id), Primary Key  
-  - the user's name (name)  
-
-* _Movie class:_ Each Movie instance will have:  
-  - a unique ID (id), Primary Key  
-  - a movie name (name)  
-  - a director's name (director)  
-  - a year of release (year)  
-  - a rating (rating) 
-
 
 ## User Guide
 
@@ -122,3 +113,39 @@ git clone https://github.com/VeronicaLobos/MoviWeb-App.git
 cd MovieWeb-App
 ```
 
+### 3. Set Up the Environment Variables
+The app uses an API key to fetch movie data from the OMDb API. You will need to register at https://www.omdbapi.com to obtain one.
+Create a `.env` file in the root directory of the project and add the API Key to the `.env` file like this:
+```plaintext
+my_api_key="YOUR_OMDB_API_KEY"
+```
+Without this key, the app will not be able to fetch movie data from the OMDb API.
+
+### 4. Instal dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Run the Application
+* To run the CSR version of the app:
+```bash
+python app_ssr.py
+```
+* To run the SSR version of the app:
+```bash
+python app_csr.py
+```
+
+### 6. Access the Application
+Open your web browser and go to ```localhost:5000/home```
+
+
+## Sneak peek
+
+<img width="646" alt="Screenshot 2025-04-11 at 21 25 51" src="https://github.com/user-attachments/assets/19a08bce-f22d-45c1-8be6-4901448fb8c3" />
+
+<img width="646" alt="Screenshot 2025-04-11 at 21 25 10" src="https://github.com/user-attachments/assets/127863f4-b5a2-40dd-9b21-c4cf24560e62" />
+
+<img width="571" alt="Screenshot 2025-04-11 at 21 26 22" src="https://github.com/user-attachments/assets/b6497ce9-7841-401b-9786-53d1c4ace693" />
+
+<img width="646" alt="Screenshot 2025-04-11 at 21 26 03" src="https://github.com/user-attachments/assets/6f55b09a-8a2c-4fdf-aeac-b82d535eba13" />
