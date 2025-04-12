@@ -103,6 +103,10 @@ with app.app_context():
 #       and from the db if no other user has rated it
 # - Extra. Define the route to get movie details...............[√]
 #     · Fetches a movie's details from the db
+# - Extra. Define the route to get about information...........[√]
+#     · Shows information about the app
+# - Extra. Define the route to handle errors...................[√]
+#     · Handles 404 and 500 errors
 
 @app.route('/home')
 def home():
@@ -466,6 +470,17 @@ def movie_details(movie_id):
     message = "Movie not found."
     return render_template('movie_info.html',
                                message=message), 404
+
+
+@app.route('/about')
+def about():
+    """
+    Returns a render of the 'about.html' template with information
+    about the application.
+
+    Reads the about.txt file to get the information to display.
+    """
+    return render_template('about.html'), 200
 
 
 # [Extra] Define the routes for error handling:

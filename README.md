@@ -10,6 +10,8 @@ about Python programming, API and web development.
 A step-by-step guide is included to help you understand how the
 code has been implemented.
 
+Now with deployment on https://veronicalobos.pythonanywhere.com/home !
+
 ## Technologies Used
 
 <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/python.png" alt="Python" title="Python"/><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/>

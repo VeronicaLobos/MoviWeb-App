@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Web App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Movie Web App</h1>
+      <div id="links">
+        <a href="/users" class="button">User list</a>
+        <a href="/add_user" class="button">Add user</a>
+        <a href="/home" class="button">Home</a>
+      </div>
+<h1>About this Project</h1>
+
+<div class="movies-grid">
+    <article class="movie-details">
+        <h2>Description</h2>
+        <p>The MovieWeb App is a web application that allows users to
+        manage a list of movies, including adding, updating, and deleting
+        movies, as well as adding user ratings. The app is designed to be
+        user-friendly and easy to navigate, with a simple and intuitive
+        interface. The app uses Flask and SQLAlchemy to manage the
+        database, and it uses SQLite as the database. The app also
+        fetches movie data from the OMDb API using the omdb_data_fetcher
+            module (requires an API key).</p>
+        <p>This program is a learning project for the Software Engineering
+        Bootcamp at MasterSchool. It showcases what I have learned
+        about Python programming, API and web development.
+        A step-by-step guide is included to help you understand how the
+        code has been implemented.</p>
+    </article>
+    <article class="movie">
+        <h2>Techs</h2>
+        <center>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/python.png" alt="Python" title="Python"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/pycharm.png" alt="PyCharm" title="PyCharm"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/flask.png" alt="Flask" title="Flask"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/sqlite.png" alt="SQLite" title="SQLite"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/rest.png" alt="REST" title="REST"/><br>
+            <img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/postman.png" alt="Postman" title="Postman"/><br>
+        </center>
+    </article>
+    <article class="form">
+        <h2>Directory Structure</h2>
+        <pre><code>
+            MovieWeb-App/
+            ├── .idea/
+            ├── static/
+            │   └── style.css
+            ├── datamanager/
+            │   ├── __init__.py
+            │   ├── data_manager_interface.py
+            │   ├── data_manager_sqlite.py
+            ├── templates/
+            │   ├── about.html      * you are here *
+            │   ├── add_movie.html
+            │   ├── add_user.html
+            │   ├── home.html
+            │   ├── movie_info.html
+            │   ├── redirect.html
+            │   ├── update_movie.html
+            │   ├── update_rating.html
+            │   ├── user_movies.html
+            │   └── users.html
+            ├── .env  &gt;&gt;&gt; my_api_key="..."
+            ├── app_csr.py
+            ├── app_ssr.py
+            ├── data_models.py
+            ├── omdb_data_fetcher.py
+            ├── README.md
+            └── requirements.txt
+        </code></pre>
+    </article>
+    </div>
+    <div class="movies-grid">
+    <article class="article">
+        <h2>Features</h2>
+        <ul>
+            <li>CRUD operations for managing movies, users and ratings.</li>
+            <li>The API is built using Flask and SQLAlchemy, and it uses
+            SQLite as the database.</li>
+            <li>Endpoints for adding, updating, and deleting movies, adding
+            users, adding user ratings, and retrieving movie details
+            and user ratings.</li>
+            <li>Input validation in templates to ensure that the user
+            provides valid data before submitting the form.</li>
+            <li>The API also fetches movie data from the OMDb API using the
+            omdb_data_fetcher module (requires an API key).</li>
+            <li>SSR (Server-Side Rendering) is used to render HTML jinja2
+            templates for the web application, and a stylesheet
+            (style.css) with a responsive minimalist design is included.</li>
+            <li>The app is designed to be user-friendly and easy to navigate,
+            with a simple and intuitive interface.</li>
+            <li>DAL (Data Access Layer) is implemented using SQLAlchemy ORM
+            with SQLite, through the DataManagerSQLite class, for
+            managing database operations.</li>
+            <li>OOP (Object-Oriented Programming) is used to define the
+            User and Movie classes, which represent the database tables.</li>
+            <li>The app is designed to be modular and easy to extend
+            with additional features in the future.</li>
+            <li>Logging is implemented to track operations where a user ID
+            is involved, such as adding or deleting movies.</li>
+        </ul>
+    </article>
+
+</div>
+<div>
+    <article class="article">
+        <h2>User Guide</h2>
+        <p>These are the steps to run the MovieWeb App locally.</p>
+    </article>
+
+    <article class="form">
+        <h3>1. Setting Up the Environment</h3>
+        <ul>
+            <li>Set up a virtual environment:
+                <pre class="movie"><code>python -m venv venv</code></pre>
+            </li>
+            <li>Activate the virtual environment:
+                <pre class="movie"><code># On Windows<br>venv\Scripts\activate<br># On macOS/Linux<br>source venv/bin/activate
+                </code></pre>
+            </li>
+            <li>Install the required packages:
+                <pre class="movie"><code>pip install -r requirements.txt</code></pre>
+            </li>
+        </ul>
+    </article>
+    <article class="form">
+        <h3>2. Clone the Repository</h3>
+        <pre class="movie"><code>git clone https://github.com/VeronicaLobos/MoviWeb-App.git<br>cd MovieWeb-App
+        </code></pre>
+    </article>
+    <article class="form">
+        <h3>3. Set Up the Environment Variables</h3>
+        <p>The app uses an API key to fetch movie data from the OMDb API.</p>
+        <p>You will need to register at <a href="https://www.omdbapi.com">https://www.omdbapi.com</a> to obtain one.</p>
+        <p>Create a <code>.env</code> file in the root directory of the project and add the API Key to the <code>.env</code> file like this:</p>
+        <pre class="movie"><code>my_api_key="YOUR_OMDB_API_KEY"
+        </code></pre>
+        <p>Without this key, the app will not be able to fetch movie data from the OMDb API.</p>
+    </article>
+    <article class="form">
+        <h3>4. Install Dependencies</h3>
+        <p>Make sure you have the required dependencies installed.</p>
+        <pre class="movie"><code>pip install -r requirements.txt</code></pre>
+    </article>
+    <article class="form">
+        <h3>5. Run the Application</h3>
+        <ul>
+            <li>To run the CSR version of the app:
+                <pre class="movie"><code>python app_ssr.py</code></pre>
+            </li>
+            <li>To run the SSR version of the app:
+                <pre class="movie"><code>python app_csr.py</code></pre>
+            </li>
+        </ul>
+    </article>
+    <article class="form">
+        <h3>6. Access the Application</h3>
+        <p>Open your web browser and go to <code class="movie">http://127.0.0.1:5002/home</code></p>
+    </article>
+</div>
+</body>
+</html>
