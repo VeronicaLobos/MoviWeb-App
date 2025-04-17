@@ -110,18 +110,16 @@ class DataManagerSQLite(DataManagerInterface):
         """
         Retrieves all movies associated with a given user id.
 
-        - Includes the rating of each movie by the user.
-
         Parameters:
             user_id (int): The ID of the user whose movies are to be retrieved.
 
         Returns:
-            a list of tuples: (movie_data: Movie, rating: float),
+            a list of movies,
             or an empty list if no movies are found.
         """
         user_movies = UserMovie.query.filter_by(user_id=user_id).all()
 
-        return [(movie.movie_relation, movie.rating) for movie in user_movies]
+        return [movie.movie_relation for movie in user_movies]
 
 
     def add_user(self, new_user: User) -> bool:

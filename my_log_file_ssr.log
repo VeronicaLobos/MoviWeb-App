@@ -1082,3 +1082,38 @@
 2025-04-17 09:57:09 INFO: 127.0.0.1 - - [17/Apr/2025 09:57:09] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=console.png&s=Kv5V0mTSXH8xVNesQnvJ HTTP/1.1[0m" 304 -
 2025-04-17 09:57:09 INFO: 127.0.0.1 - - [17/Apr/2025 09:57:09] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
 2025-04-17 09:57:09 INFO: 127.0.0.1 - - [17/Apr/2025 09:57:09] "GET /users/1?__debugger__=yes&cmd=resource&f=console.png&s=cYDPNXob2Nt5Isn8Xref HTTP/1.1" 200 -
+2025-04-17 10:15:56 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 10:15:56 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 10:15:56 INFO:  * Restarting with stat
+2025-04-17 10:15:56 WARNING:  * Debugger is active!
+2025-04-17 10:15:56 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 10:15:56 INFO: Home page accessed
+2025-04-17 10:15:56 INFO: Home page accessed
+2025-04-17 10:15:56 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:56] "GET /home HTTP/1.1" 200 -
+2025-04-17 10:15:56 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:56] "GET /home HTTP/1.1" 200 -
+2025-04-17 10:15:56 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:56] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:15:57 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:57] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 10:15:57 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:57] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 10:15:57 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:57] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 10:15:58 INFO: List of all users accessed
+2025-04-17 10:15:58 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:58] "GET /users HTTP/1.1" 200 -
+2025-04-17 10:15:58 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:58] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:15:59 INFO: List of movies for user 1 accessed
+2025-04-17 10:15:59 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:59] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 10:15:59 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:59] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:15:59 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:59] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 10:15:59 INFO: 127.0.0.1 - - [17/Apr/2025 10:15:59] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:16:03 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:03] "GET /users/1/update_movie/1 HTTP/1.1" 200 -
+2025-04-17 10:16:03 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:03] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:16:05 INFO: List of all users accessed
+2025-04-17 10:16:05 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:05] "GET /users HTTP/1.1" 200 -
+2025-04-17 10:16:06 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:06] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:16:06 INFO: List of movies for user 1 accessed
+2025-04-17 10:16:06 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:06] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 10:16:06 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:06] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 10:16:06 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:06] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:16:07 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:07] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 10:16:08 INFO: Movie details for movie 1 accessed
+2025-04-17 10:16:08 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:08] "GET /movie/1 HTTP/1.1" 200 -
+2025-04-17 10:16:09 INFO: 127.0.0.1 - - [17/Apr/2025 10:16:09] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -

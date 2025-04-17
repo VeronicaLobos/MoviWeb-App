@@ -150,11 +150,9 @@ def list_all_users():
 def list_user_movies(user_id):
     """
     Returns a list of all movies associated with a given user.
-    along with the user rating for each movie.
-    Each  movie is linked to its details page.
-    Each  movie has a button for:
+    Each movie is linked to its details page.
+    Each movie has a button for:
     · updating the movie information
-    · updating the user rating
     · deleting the movie from the user's list
 
     - Queries the database for all movies associated with the
@@ -164,8 +162,8 @@ def list_user_movies(user_id):
     the user_id.
 
     Returns a render of the user_movies.html template with
-    the list of movies containing the movie name and rating,
-    the user_id and the user_name.
+    the list of movies containing the movie name, the user_id
+    and the user_name.
     If no movies are found for the user, it renders the template
     with a message indicating that no movies were found.
     """
@@ -175,7 +173,7 @@ def list_user_movies(user_id):
 
     if user_movies:
         # Extract the movie (Movie) and their ratings (int)
-        user_movies = [(movie[0], movie[1]) for movie in user_movies]
+        user_movies = [movie for movie in user_movies]
         return render_template('user_movies.html',
                                user_id=user_id,
                                user_movies=user_movies,

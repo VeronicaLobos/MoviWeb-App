@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>{{ user_name }}'s Movie Ratings</h1>
+    <h1>{{ user_name }}'s Movie List</h1>
     </div>
     {% if message %}
     <div id="Message">
@@ -24,13 +24,13 @@
     <div class="movies-grid">
         {% for movie in user_movies %}
             <article class="movie">
-                <a href="/movie/{{ movie[0].movie_id }}">
-                    <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
+                <a href="/movie/{{ movie.movie_id }}">
+                    <img src="{{ movie.poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
                 </a>
-                <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
+                <form action="/users/{{ user_id }}/delete_movie/{{ movie.movie_id }}" method="post">
                     <input type="submit" value="Delete from list" class="button">
                 </form>
-                <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
+                <form action="/users/{{ user_id }}/update_movie/{{ movie.movie_id }}" method="get">
                     <input type="submit" value="Update movie data" class="button">
                 </form>
             </article>
