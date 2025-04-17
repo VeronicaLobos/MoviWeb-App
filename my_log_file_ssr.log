@@ -1,0 +1,145 @@
+2025-04-17 11:54:58 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 11:54:58 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 11:54:58 INFO:  * Restarting with stat
+2025-04-17 11:54:59 WARNING:  * Debugger is active!
+2025-04-17 11:54:59 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 11:54:59 INFO: Home page accessed
+2025-04-17 11:54:59 INFO: Home page accessed
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:54:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:54:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:55:00 INFO: GET request to add a new user
+2025-04-17 11:55:00 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:00] "GET /add_user HTTP/1.1" 200 -
+2025-04-17 11:55:00 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:00] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:28 INFO: POST request to add a new user
+2025-04-17 11:55:28 INFO: User obi added successfully!
+2025-04-17 11:55:28 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:28] "[35m[1mPOST /add_user HTTP/1.1[0m" 201 -
+2025-04-17 11:55:28 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:28] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:30 INFO: List of all users accessed
+2025-04-17 11:55:30 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:30] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:55:30 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:30] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:32 INFO: List of movies for user 2 accessed
+2025-04-17 11:55:32 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:32] "[33mGET /users/2 HTTP/1.1[0m" 404 -
+2025-04-17 11:55:32 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:32] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:33 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:33] "GET /users/2/add_movie HTTP/1.1" 200 -
+2025-04-17 11:55:33 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:33] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:37 INFO: POST request to add a new movie by {user_id}
+2025-04-17 11:55:37 INFO: Movie The Matrix added successfully!
+2025-04-17 11:55:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:37] "[35m[1mPOST /users/2/add_movie HTTP/1.1[0m" 201 -
+2025-04-17 11:55:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:37] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:39 INFO: List of all users accessed
+2025-04-17 11:55:39 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:39] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:55:40 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:40] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:40 INFO: List of movies for user 2 accessed
+2025-04-17 11:55:40 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:40] "GET /users/2 HTTP/1.1" 200 -
+2025-04-17 11:55:41 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:41] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:42] "GET /users/2/add_movie HTTP/1.1" 200 -
+2025-04-17 11:55:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:42] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:55:48 INFO: POST request to add a new movie by {user_id}
+2025-04-17 11:55:48 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:48] "[33mPOST /users/2/add_movie HTTP/1.1[0m" 404 -
+2025-04-17 11:55:48 INFO: 127.0.0.1 - - [17/Apr/2025 11:55:48] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:06 INFO: POST request to add a new movie by {user_id}
+2025-04-17 11:56:07 INFO: Movie The Great Passage added successfully!
+2025-04-17 11:56:07 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:07] "[35m[1mPOST /users/2/add_movie HTTP/1.1[0m" 201 -
+2025-04-17 11:56:07 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:07] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:08 INFO: List of all users accessed
+2025-04-17 11:56:08 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:08] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:56:09 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:09] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:09 INFO: List of movies for user 2 accessed
+2025-04-17 11:56:09 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:09] "GET /users/2 HTTP/1.1" 200 -
+2025-04-17 11:56:09 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:09] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:14 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:14] "GET /users/2/add_movie HTTP/1.1" 200 -
+2025-04-17 11:56:14 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:14] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:29 INFO: POST request to add a new movie by {user_id}
+2025-04-17 11:56:30 INFO: Movie Your Name. added successfully!
+2025-04-17 11:56:30 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:30] "[35m[1mPOST /users/2/add_movie HTTP/1.1[0m" 201 -
+2025-04-17 11:56:30 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:30] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:32 INFO: List of all users accessed
+2025-04-17 11:56:32 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:32] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:56:32 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:32] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:32 INFO: List of movies for user 2 accessed
+2025-04-17 11:56:32 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:32] "GET /users/2 HTTP/1.1" 200 -
+2025-04-17 11:56:33 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:33] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:35 INFO: List of all users accessed
+2025-04-17 11:56:35 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:35] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:56:35 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:35] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:36 INFO: List of movies for user 1 accessed
+2025-04-17 11:56:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:36] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 11:56:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:36] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 11:56:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:36] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:36] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:37] "GET /users/1/add_movie HTTP/1.1" 200 -
+2025-04-17 11:56:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:37] "[36mGET /users/1/add_movie?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:37] "[36mGET /users/1/add_movie?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 11:56:37 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:37] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:44 INFO: POST request to add a new movie by {user_id}
+2025-04-17 11:56:44 INFO: Movie What Dreams May Come added successfully!
+2025-04-17 11:56:44 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:44] "[35m[1mPOST /users/1/add_movie HTTP/1.1[0m" 201 -
+2025-04-17 11:56:44 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:44] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:46 INFO: List of all users accessed
+2025-04-17 11:56:46 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:46] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:56:46 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:46] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:47 INFO: List of movies for user 1 accessed
+2025-04-17 11:56:47 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:47] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 11:56:47 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:47] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:47 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:47] "[36mGET /users/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 11:56:47 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:47] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:51 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:51] "GET /users/1/delete_movie/1 HTTP/1.1" 200 -
+2025-04-17 11:56:51 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:51] "[36mGET /users/1/delete_movie/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:51 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:51] "[36mGET /users/1/delete_movie/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-17 11:56:51 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:51] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:53 INFO: POST request to delete movieby {user_id} for movie {movie_id}
+2025-04-17 11:56:53 INFO: Movie Titanic deleted successfully!
+2025-04-17 11:56:53 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:53] "POST /users/1/delete_movie/1 HTTP/1.1" 200 -
+2025-04-17 11:56:53 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:53] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:56 INFO: Home page accessed
+2025-04-17 11:56:56 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:56] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:56:56 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:56] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:56:56 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:56] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:56:56 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:56] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:56:56 INFO: 127.0.0.1 - - [17/Apr/2025 11:56:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:57:45 INFO: Movie details for movie 2 accessed
+2025-04-17 11:57:45 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:45] "GET /movie/2 HTTP/1.1" 200 -
+2025-04-17 11:57:45 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:45] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:57:58 INFO: Home page accessed
+2025-04-17 11:57:58 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:58] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:57:58 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:58] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:57:58 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:58] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:57:58 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:58] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:57:58 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:57:59 INFO: GET request to add a new user
+2025-04-17 11:57:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:59] "GET /add_user HTTP/1.1" 200 -
+2025-04-17 11:57:59 INFO: 127.0.0.1 - - [17/Apr/2025 11:57:59] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:58:11 INFO: Home page accessed
+2025-04-17 11:58:11 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:11] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:58:11 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:11] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:58:11 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:11] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:58:11 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:11] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:58:11 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:58:12 INFO: List of all users accessed
+2025-04-17 11:58:12 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:12] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:58:12 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:12] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:58:14 INFO: List of movies for user 2 accessed
+2025-04-17 11:58:14 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:14] "GET /users/2 HTTP/1.1" 200 -
+2025-04-17 11:58:14 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:14] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:58:18 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:18] "GET /users/2/update_movie/4 HTTP/1.1" 200 -
+2025-04-17 11:58:18 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:18] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:58:24 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:24] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:58:24 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:24] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:58:24 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:58:27 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:27] "GET /users/2/update_movie/4 HTTP/1.1" 200 -
+2025-04-17 11:58:27 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:27] "GET /_static/style.css HTTP/1.1" 200 -
+2025-04-17 11:58:28 INFO: 127.0.0.1 - - [17/Apr/2025 11:58:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 11:59:36 INFO: List of all users accessed
+2025-04-17 11:59:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:36] "GET /users HTTP/1.1" 200 -
+2025-04-17 11:59:36 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:36] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:59:42 INFO: Home page accessed
+2025-04-17 11:59:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:42] "GET /home HTTP/1.1" 200 -
+2025-04-17 11:59:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:42] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 11:59:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:42] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 11:59:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:42] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 11:59:42 INFO: 127.0.0.1 - - [17/Apr/2025 11:59:42] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

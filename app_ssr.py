@@ -414,7 +414,7 @@ def update_movie(user_id, movie_id):
                             movie=movie)
 
 
-@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])
+@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>', methods=['GET', 'POST'])
 def delete_movie(user_id, movie_id):
     """
     Upon visiting this route, a specific movie will be removed
@@ -422,28 +422,34 @@ def delete_movie(user_id, movie_id):
 
     * Only registered users can delete movies from the database
     """
-    # Call the delete_movie method to delete the movie from the database
-    # should return the deleted movie name
-    app.logger.info("POST request to delete movie"
-                    "by {user_id} for movie {movie_id}")
-    deleted_movie = data_manager.delete_movie(user_id, movie_id)
-    if deleted_movie:
-        status = "Movie deleted"
-        message = f"Movie {deleted_movie.movie_name} deleted successfully!"
-        app.logger.info(message)
+    if request.method == "POST":
+        app.logger.info("POST request to delete movie"
+                        "by {user_id} for movie {movie_id}")
+        deleted_movie = data_manager.delete_movie(user_id, movie_id)
+        if deleted_movie:
+            status = "Movie deleted"
+            message = f"Movie {deleted_movie.movie_name} deleted successfully!"
+            app.logger.info(message)
+            return render_template('redirect.html',
+                                   status=status,
+                                   message=message,
+                                   user_id=user_id,
+                                   movie_id=movie_id), 200
+
+        status = "Movie not found"
+        message = f"Movie with ID {movie_id} not found."
         return render_template('redirect.html',
                                status=status,
                                message=message,
                                user_id=user_id,
-                               movie_id=movie_id), 200
-
-    status = "Movie not found"
-    message = f"Movie with ID {movie_id} not found."
-    return render_template('redirect.html',
-                               status=status,
-                               message=message,
-                               user_id=user_id,
                                movie_id=movie_id), 404
+
+    # If a GET request is made, render the delete_movie.html
+    movie = data_manager.get_movie(movie_id)
+    return render_template('delete_movie.html',
+                            user_id=user_id,
+                            movie_id=movie_id,
+                            movie_name=movie.movie_name)
 
 
 @app.route('/movie/<movie_id>')

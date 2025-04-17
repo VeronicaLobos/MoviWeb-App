@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete movie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h2>Deletion confirmation</h2>
+    <div class="post-message">
+        <h3>Do you want to delete {{ movie_name }} from the list?</h3>
+        <h3>Note: Movie will be deleted from the database if other users have not listed it.</h3>
+        <form action="/users/{{ user_id }}/delete_movie/{{ movie_id }}" method="post">
+            <input type="submit" value="Delete from list" class="button"><a href="/home" class="button">Cancel</a>
+        </form>
+        </div>
+    </div>
+</body>
+</html>
