@@ -93,12 +93,10 @@ with app.app_context():
 #   and a list of all movies in the database.................[√]
 # - Define the route to list all users in the database.......[√]
 # - Define the route to list all movies associated with a
-#   given user, with the user's ratings, and the username....[√]
+#   given user, with the username............................[√]
 # - Define the route to add a new user to the database.......[√]
 # - Define the route to add a new movie to the user's
 #   list of favorite movies..................................[√]
-# - Define the route to update the rating of a specific
-#   movie in the user's favorite movies list.................[√]
 # - Define the route to update the details of a specific
 #   movie in the user's favorite movies list.................[√]
 # - Define the route to delete a movie from the user's
@@ -124,10 +122,14 @@ def _validate_movie_data(movie_to_update, current_movie):
     validation_rules = {
         'movie_name': (str, "Invalid movie name format"),
         'director': (str, "Invalid director format"),
+        'rating': (float, "Invalid rating format",
+                    lambda r: 0.0 <= r <= 10.0),
         'year': (int, "Invalid year format",
                  lambda y: 1878 < y < 2031 and len(str(y)) == 4),
         'genre': (str, "Invalid genre format"),
-        'poster_url': (str, "Invalid poster URL format")
+        'poster_url': (str, "Invalid poster URL format"),
+        'plot': (str, "Invalid plot format",
+                 lambda p: 500 > len(p) > 0)
     }
 
     for attribute, (expected_type, error_message, *conditions) \
@@ -170,10 +172,12 @@ def home():
                    movies=[{
                        'movie_id': movie.movie_id,
                        'movie_name': movie.movie_name,
+                       'rating': movie.rating,
                        'director': movie.director,
                        'year': movie.year,
                        'genre': movie.genre,
-                       'poster_url': movie.poster_url
+                       'poster_url': movie.poster_url,
+                       'plot': movie.plot
                    } for movie in movies]), 200
 
     message = "No movies found in the database."
@@ -207,8 +211,8 @@ def list_all_users():
 @limiter.limit("10/minute")
 def list_user_movies(user_id):
     """
-    Returns a list of all movies associated with a given user,
-    with the user's ratings, and the user's name.
+    Returns a list of all movies associated with a given
+    user, with the user's name.
     If the user is not found, it returns a message
     indicating that the user was not found.
     If the user has no movies, it returns a message
@@ -222,17 +226,13 @@ def list_user_movies(user_id):
         return jsonify(message=message), 404
 
     if user_movies:
-        # Extract the movie (Movie) and their ratings (int)
-        user_movies = [(movie[0], movie[1]) for movie in user_movies]
+        # If the user has movies, format the response
+        # to include the user's name and the list of movies
+        user_movies = [movie for movie in user_movies]
         return jsonify(user_name=user_name,
             user_movies=[{
-                'movie_id': movie[0].movie_id,
-                'movie_name': movie[0].movie_name,
-                'director': movie[0].director,
-                'year': movie[0].year,
-                'genre': movie[0].genre,
-                'poster_url': movie[0].poster_url,
-                'rating': movie[1]
+                'movie_id': movie.movie_id,
+                'movie_name': movie.movie_name
             } for movie in user_movies]), 200
 
     message = f"User {user_name} has no movies."
@@ -240,7 +240,7 @@ def list_user_movies(user_id):
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+@limiter.limit("5/minute")
 def add_user():
     """
     Adds a new user to the database.
@@ -257,12 +257,17 @@ def add_user():
     """
     if request.method == 'POST':
         new_user = request.get_json()
-        if (not new_user or 'user_name' not in new_user
-            or 'avatar_url' not in new_user):
+        if not new_user or 'user_name' not in new_user:
             return jsonify({"error": "Invalid user data"}), 400
 
+        if not 'avatar_url' in new_user:
+            avatar_url = ("https://gravatar.com/userimage/12498767/"
+                "cf086b8eb3c9ffbc5147271157598803.jpeg?size=256")
+        else:
+            avatar_url = new_user['avatar_url']
+
         user = User(user_name=new_user['user_name'],
-                    avatar_url=new_user['avatar_url'])
+                    avatar_url=avatar_url)
         data_manager.add_user(user)
 
         if not user.user_id:
@@ -283,7 +288,7 @@ def add_user():
 
 @app.route('/users/<int:user_id>/add_movie',
                          methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+@limiter.limit("5/minute")
 def add_movie(user_id):
     """
     Adds a new movie to the user's list of favorite movies.
@@ -293,9 +298,8 @@ def add_movie(user_id):
 
     * If a POST request is made:
     - It retrieves the user ID from the URL.
-    - It retrieves the movie name and rating from the request.
-    - It checks if the movie data is valid (movie_name and
-      rating).
+    - It retrieves the movie name from the request.
+    - It checks if the movie data is valid.
     - It fetches the movie data from the OMDB API using the
       data_fetcher function.
     - If the movie is found, it creates a new Movie object
@@ -307,14 +311,11 @@ def add_movie(user_id):
         new_movie = request.get_json()
         print(new_movie)
         if (not new_movie
-            or not isinstance(new_movie['movie_name'], str)
-            or not isinstance(new_movie['rating'], (float, int))
-            or 10.0 < new_movie['rating'] < 0.0
             or 'movie_name' not in new_movie
-            or 'rating' not in new_movie):
+            or not isinstance(new_movie['movie_name'], str)):
             return jsonify({"error": "Invalid movie data"}), 400
 
-        movie_name, rating = new_movie['movie_name'], new_movie['rating']
+        movie_name= new_movie['movie_name']
         new_movie_obj = data_fetcher(movie_name)
 
         # If new_movie_obj is None, it means the movie was not found, or
@@ -326,11 +327,10 @@ def add_movie(user_id):
         # If the movie was found, a Movie object is returned
         # and can be added to the database
         new_movie_exists = data_manager.add_movie(new_movie_obj,
-                                        user_id, rating)
+                                        user_id)
 
         if new_movie_exists:
-            message = (f"Movie {new_movie_obj.movie_name} added successfully"
-                       f" with rating {rating}!")
+            message = f"Movie {new_movie_obj.movie_name} added successfully!"
             return jsonify(message=message), 201
 
         message = f"Movie {new_movie_obj.movie_name} already exists."
@@ -338,67 +338,15 @@ def add_movie(user_id):
 
     # If the method is 'GET'
     message = "Please, provide the following data: " \
-              "movie_name and rating in JSON format."
+              "movie_name in JSON format."
     movie_name = "A string (required)"
-    rating = "A float between 0.0 and 10.0 (required)"
     return jsonify(message=message,
-                   movie_name=movie_name,
-                   rating=rating), 200
-
-
-@app.route('/users/<int:user_id>/update_rating/<int:movie_id>',
-                                            methods=['GET', 'POST'])
-@limiter.limit("1/minute")
-def update_rating(user_id, movie_id):
-    """
-    Updates the rating of a specific movie in the user's
-    favorite movies list.
-
-    * If a GET request is made, it returns a message
-    indicating the required data to add a movie.
-
-    * If a POST request is made:
-    - It retrieves the user ID and movie ID from the URL.
-    - It retrieves the rating from the request.
-    - It checks if the rating is valid (a float between
-      0.0 and 10.0).
-    - It fetches the movie data from the database using
-      the data_manager instance.
-    - If the movie is found, it updates the rating in the
-      database and returns a success message.
-    - If the movie is not found or the rating is invalid,
-      it returns an error message.
-    """
-    if request.method == "POST":
-        rating = request.get_json()
-
-        if (not rating or 'rating' not in rating
-        or not isinstance(rating['rating'], (float, int))
-        or rating['rating'] < 0.0 or rating['rating'] > 10.0):
-            return jsonify({"error": "Invalid rating data"}), 400
-
-        movie = data_manager.get_movie(movie_id)
-
-        updated_movie = data_manager.update_rating(user_id,
-                            movie_id, rating['rating'])
-
-        if updated_movie:
-            message = f"Movie {movie.movie_name} updated successfully!"
-            return jsonify(message=message), 200
-
-        message = f"Movie {movie.movie_name} not found."
-        return jsonify({"error": message}), 404
-
-    # If the method is 'GET'
-    message = "Please, provide the following data: " \
-              "rating in JSON format."
-    rating = "A float between 0.0 and 10.0"
-    return jsonify(message=message, rating=rating), 200
+                   movie_name=movie_name), 200
 
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>',
                                             methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+@limiter.limit("5/minute")
 def update_movie(user_id, movie_id):
     """
     This route allows a user to update the details of a
@@ -419,8 +367,8 @@ def update_movie(user_id, movie_id):
         returns an error message.
     - It retrieves the movie details from the request.
     - It checks if the movie data is valid (movie_name,
-        director, year, genre, poster_url), if the
-        data is not valid, it returns an error message.
+        rating, director, year, genre, poster_url, plot),
+        if the data is not valid, it returns an error message.
         If the data is valid, it updates the movie object
         with the new attributes.
     - It updates the movie details in the database, and
@@ -462,16 +410,19 @@ def update_movie(user_id, movie_id):
         message="Please, provide the following data to update"
                 " a movie: ",
         movie_name="A string (optional)",
+        rating="A float between 0.0 and 10.0 (optional)",
         director="A string (optional)",
         year="An integer with length 4 and 1878 < value < 2031"
                 " (optional)",
         genre="A string (optional)",
-        poster_url="A string URL (optional)"), 200
+        poster_url="A string URL (optional)",
+        plot="A string with length 0 < value < 500 (optional)"
+        ), 200
 
 
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>',
                                                   methods=['POST'])
-@limiter.limit("1/minute")
+@limiter.limit("5/minute")
 def delete_movie(user_id, movie_id):
     """
     This route allows a user to delete a specific movie
@@ -505,7 +456,7 @@ def delete_movie(user_id, movie_id):
 
         deleted_movie = data_manager.delete_movie(user_id, movie_id)
         if deleted_movie:
-            message = (f"Movie {deleted_movie.movie_name} "
+            message = (f"Movie {current_movie.movie_name} "
                        f"deleted successfully!")
             return jsonify(message=message), 200
 
@@ -522,6 +473,7 @@ def movie_details(movie_id):
         if movie:
             return jsonify(movie_id=movie.movie_id,
                            movie_name=movie.movie_name,
+                           rating=movie.rating,
                            director=movie.director,
                            year=movie.year,
                            genre=movie.genre,
@@ -554,9 +506,6 @@ def internal_server_error(error):
 # [Step 3] Define the main function to run the Flask application
 
 if __name__ == '__main__':
-    # Example URLs to test the API:
     URL_HOME = 'http://127.0.0.1:5002/home'
-    URL_USERS = 'http://127.0.0.1:5002/users'
-    URL_USER_1 = 'http://127.0.0.1:5002/users/1'
     webbrowser.open_new(URL_HOME)
     app.run(port=5002, debug=True)
