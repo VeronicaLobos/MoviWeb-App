@@ -36,11 +36,12 @@ Rendering (SSR) using Flask and Jinja2 templates.
  - The API is built using Flask and SQLAlchemy, and it uses
     SQLite as the database.
  - Endpoints for adding, updating, and deleting movies, adding
-    users, adding user ratings, and retrieving movie details
-    and user ratings.
+    users, and retrieving movie details.
  - Input validation in templates to ensure that the user
     provides valid data before submitting the form.
- - The API also fetches movie data from the OMDb API using the
+ - Deletion confirmation for movies and users to prevent
+    accidental deletions.
+ - The API fetches movie data from the OMDb API using the
     omdb_data_fetcher module (requires an API key).
  - SSR (Server-Side Rendering) is used to render HTML jinja2
     templates for the web application, and a stylesheet
@@ -69,16 +70,17 @@ MovieWeb-App/
 │   ├── data_manager_interface.py
 │   ├── data_manager_sqlite.py
 ├── templates/
+│   ├── about.html
 │   ├── add_movie.html
 │   ├── add_user.html
+│   ├── delete_movie.html
 │   ├── home.html
 │   ├── movie_info.html
 │   ├── redirect.html
 │   ├── update_movie.html
-│   ├── update_rating.html
 │   ├── user_movies.html
 │   └── users.html
-├── .env  >>> my_api_key="..."
+├── .env  >>> my_api_key="..." * your api key goes here *
 ├── app_csr.py
 ├── app_ssr.py
 ├── data_models.py
@@ -93,7 +95,7 @@ These are the steps to run the MovieWeb App locally.
 
 ### 1. Setting Up the Environment
 
-* Set up a virtual environment:  
+* Set up a virtual environment (the app uses Python 3.9):
 ```bash
 python -m venv venv
 ```
@@ -104,7 +106,7 @@ venv\Scripts\activate
 # On macOS/Linux
 source venv/bin/activate
 ```
-* Install the required packages:  
+* Install the required packages with pip or your preferred package manager:  
 ```bash
 pip install -r requirements.txt
 ```
@@ -139,15 +141,13 @@ python app_csr.py
 ```
 
 ### 6. Access the Application
-Open your web browser and go to ```localhost:5000/home```
+Open your web browser and go to ```localhost:5002/home```
 
 
 ## Sneak peek
 
 <img width="646" alt="Screenshot 2025-04-11 at 21 25 51" src="https://github.com/user-attachments/assets/19a08bce-f22d-45c1-8be6-4901448fb8c3" />
 
-<img width="646" alt="Screenshot 2025-04-11 at 21 25 10" src="https://github.com/user-attachments/assets/127863f4-b5a2-40dd-9b21-c4cf24560e62" />
+<img alt="Screenshot 2025-04-17 at 11 56 56" src="https://github.com/user-attachments/assets/8c22880c-4aec-44c4-b2fb-d551c631dac4" />
 
-<img width="571" alt="Screenshot 2025-04-11 at 21 26 22" src="https://github.com/user-attachments/assets/b6497ce9-7841-401b-9786-53d1c4ace693" />
-
-<img width="646" alt="Screenshot 2025-04-11 at 21 26 03" src="https://github.com/user-attachments/assets/6f55b09a-8a2c-4fdf-aeac-b82d535eba13" />
+<img width="573" alt="Screenshot 2025-04-17 at 11 57 56" src="https://github.com/user-attachments/assets/21e72d15-8c8f-4e9a-a701-3c05325f35fa" />

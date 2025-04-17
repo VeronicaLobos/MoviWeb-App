@@ -4,4 +4,5 @@ requests~=2.32.3
 urllib3~=2.3.0
 flask-cors~=5.0.1
 flask-limiter~=3.11.0
+flask-sqlalchemy
 python-dotenv~=1.1.0

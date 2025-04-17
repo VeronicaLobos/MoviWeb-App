@@ -22,12 +22,11 @@
         <h2>Description</h2>
         <p>The MovieWeb App is a web application that allows users to
         manage a list of movies, including adding, updating, and deleting
-        movies, as well as adding user ratings. The app is designed to be
-        user-friendly and easy to navigate, with a simple and intuitive
-        interface. The app uses Flask and SQLAlchemy to manage the
-        database, and it uses SQLite as the database. The app also
-        fetches movie data from the OMDb API using the omdb_data_fetcher
-            module (requires an API key).</p>
+        movies. The app is designed to be user-friendly and easy to navigate,
+            with a simple and intuitive interface.
+            The app uses Flask and SQLAlchemy to manage the database, and it uses
+            SQLite as the database. The app also fetches movie data from the OMDb
+            API using the omdb_data_fetcher module (requires an API key).</p>
         <p>This program is a learning project for the Software Engineering
         Bootcamp at MasterSchool. It showcases what I have learned
         about Python programming, API and web development.
@@ -51,31 +50,31 @@
         <h2>Directory Structure</h2>
         <pre><code>
             MovieWeb-App/
-            ├── .idea/
-            ├── static/
-            │   └── style.css
-            ├── datamanager/
-            │   ├── __init__.py
-            │   ├── data_manager_interface.py
-            │   ├── data_manager_sqlite.py
-            ├── templates/
-            │   ├── about.html      * you are here *
-            │   ├── add_movie.html
-            │   ├── add_user.html
-            │   ├── home.html
-            │   ├── movie_info.html
-            │   ├── redirect.html
-            │   ├── update_movie.html
-            │   ├── update_rating.html
-            │   ├── user_movies.html
-            │   └── users.html
-            ├── .env  &gt;&gt;&gt; my_api_key="..."
-            ├── app_csr.py
-            ├── app_ssr.py
-            ├── data_models.py
-            ├── omdb_data_fetcher.py
-            ├── README.md
-            └── requirements.txt
+├──         .idea/
+├──         static/
+│           └── style.css
+├──         datamanager/
+│           ├── __init__.py
+│           ├── data_manager_interface.py
+│           ├── data_manager_sqlite.py
+├──         templates/
+│           ├── about.html
+│           ├── add_movie.html
+│           ├── add_user.html
+│           ├── delete_movie.html
+│           ├── home.html
+│           ├── movie_info.html
+│           ├── redirect.html
+│           ├── update_movie.html
+│           ├── user_movies.html
+│           └── users.html
+├──         .env  >>> my_api_key="..." * your key here *
+├──         app_csr.py
+├──         app_ssr.py
+├──         data_models.py
+├──         omdb_data_fetcher.py
+├──         README.md  * you are here *
+└──         requirements.txt
         </code></pre>
     </article>
     </div>
@@ -87,8 +86,7 @@
             <li>The API is built using Flask and SQLAlchemy, and it uses
             SQLite as the database.</li>
             <li>Endpoints for adding, updating, and deleting movies, adding
-            users, adding user ratings, and retrieving movie details
-            and user ratings.</li>
+            users, and retrieving movie details.</li>
             <li>Input validation in templates to ensure that the user
             provides valid data before submitting the form.</li>
             <li>The API also fetches movie data from the OMDb API using the
@@ -107,6 +105,8 @@
             with additional features in the future.</li>
             <li>Logging is implemented to track operations where a user ID
             is involved, such as adding or deleting movies.</li>
+            <li>Deletion confirmation for movies and users to prevent
+            accidental deletions.</li>
         </ul>
     </article>
 
@@ -120,14 +120,14 @@
     <article class="form">
         <h3>1. Setting Up the Environment</h3>
         <ul>
-            <li>Set up a virtual environment:
+            <li>Set up a virtual environment (the app uses Python 3.9):
                 <pre class="movie"><code>python -m venv venv</code></pre>
             </li>
             <li>Activate the virtual environment:
                 <pre class="movie"><code># On Windows<br>venv\Scripts\activate<br># On macOS/Linux<br>source venv/bin/activate
                 </code></pre>
             </li>
-            <li>Install the required packages:
+            <li>Install the required packages with pip or your preferred package manager:
                 <pre class="movie"><code>pip install -r requirements.txt</code></pre>
             </li>
         </ul>
@@ -149,6 +149,7 @@
     <article class="form">
         <h3>4. Install Dependencies</h3>
         <p>Make sure you have the required dependencies installed.</p>
+        <p>Use pip or your preferred package manager:</p>
         <pre class="movie"><code>pip install -r requirements.txt</code></pre>
     </article>
     <article class="form">
