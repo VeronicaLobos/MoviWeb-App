@@ -799,3 +799,152 @@
 2025-04-12 09:30:17 INFO: 127.0.0.1 - - [12/Apr/2025 09:30:17] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
 2025-04-12 09:30:18 INFO: 127.0.0.1 - - [12/Apr/2025 09:30:18] "GET /about HTTP/1.1" 200 -
 2025-04-12 09:30:18 INFO: 127.0.0.1 - - [12/Apr/2025 09:30:18] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:21 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 09:35:21 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 09:35:21 INFO:  * Restarting with stat
+2025-04-17 09:35:21 WARNING:  * Debugger is active!
+2025-04-17 09:35:21 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 09:35:21 INFO: Home page accessed
+2025-04-17 09:35:21 INFO: Home page accessed
+2025-04-17 09:35:21 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:21] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:35:21 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:21] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "GET /_static/style.css HTTP/1.1" 200 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:35:22 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:22] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:24 INFO: List of all users accessed
+2025-04-17 09:35:24 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:24] "[33mGET /users HTTP/1.1[0m" 404 -
+2025-04-17 09:35:24 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:24] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:25 INFO: GET request to add a new user
+2025-04-17 09:35:25 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:25] "GET /add_user HTTP/1.1" 200 -
+2025-04-17 09:35:25 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:25] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:29 INFO: POST request to add a new user
+2025-04-17 09:35:29 INFO: User rin added successfully!
+2025-04-17 09:35:29 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:29] "[35m[1mPOST /add_user HTTP/1.1[0m" 201 -
+2025-04-17 09:35:29 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:29] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:30 INFO: List of all users accessed
+2025-04-17 09:35:30 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:30] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:35:31 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:31] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:32 INFO: List of movies for user 1 accessed
+2025-04-17 09:35:32 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:32] "[33mGET /users/1 HTTP/1.1[0m" 404 -
+2025-04-17 09:35:32 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:32] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:35 INFO: Home page accessed
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:35:35 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:35] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:39 INFO: List of all users accessed
+2025-04-17 09:35:39 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:39] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:35:39 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:39] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:40 INFO: List of movies for user 1 accessed
+2025-04-17 09:35:40 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:40] "[33mGET /users/1 HTTP/1.1[0m" 404 -
+2025-04-17 09:35:40 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:40] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:42 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:42] "GET /users/1/add_movie HTTP/1.1" 200 -
+2025-04-17 09:35:42 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:42] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:47 INFO: POST request to add a new movie by {user_id}
+2025-04-17 09:35:47 INFO: Movie Titanic added successfully with rating None!
+2025-04-17 09:35:47 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:47] "[35m[1mPOST /users/1/add_movie HTTP/1.1[0m" 201 -
+2025-04-17 09:35:47 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:47] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:49 INFO: Home page accessed
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:35:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:35:50 INFO: Movie details for movie 1 accessed
+2025-04-17 09:35:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:50] "GET /movie/1 HTTP/1.1" 200 -
+2025-04-17 09:35:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:35:50] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:07 INFO: Home page accessed
+2025-04-17 09:36:07 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:07] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:36:07 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:07] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:07 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:07] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:36:07 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:07] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:36:07 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:36:09 INFO: List of all users accessed
+2025-04-17 09:36:09 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:09] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:36:09 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:09] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:10 INFO: List of movies for user 1 accessed
+2025-04-17 09:36:10 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:10] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 09:36:10 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:10] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:12 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:12] "GET /users/1/update_movie/1 HTTP/1.1" 200 -
+2025-04-17 09:36:12 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:12] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:45 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 09:36:45 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 09:36:45 INFO:  * Restarting with stat
+2025-04-17 09:36:46 WARNING:  * Debugger is active!
+2025-04-17 09:36:46 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 09:36:46 INFO: Home page accessed
+2025-04-17 09:36:46 INFO: Home page accessed
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:36:46 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:46] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:36:48 INFO: List of all users accessed
+2025-04-17 09:36:48 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:48] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:36:48 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:48] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:49 INFO: List of movies for user 1 accessed
+2025-04-17 09:36:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:49] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 09:36:49 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:49] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:36:51 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:51] "GET /users/1/update_movie/1 HTTP/1.1" 200 -
+2025-04-17 09:36:51 INFO: 127.0.0.1 - - [17/Apr/2025 09:36:51] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:37:17 INFO: Home page accessed
+2025-04-17 09:37:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:17] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:37:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:17] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:37:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:17] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:37:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:17] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:37:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:17] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:37:24 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:24] "GET /about HTTP/1.1" 200 -
+2025-04-17 09:37:24 INFO: 127.0.0.1 - - [17/Apr/2025 09:37:24] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:14 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 09:39:14 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 09:39:14 INFO:  * Restarting with stat
+2025-04-17 09:39:15 WARNING:  * Debugger is active!
+2025-04-17 09:39:15 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 09:39:15 INFO: Home page accessed
+2025-04-17 09:39:15 INFO: Home page accessed
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:39:15 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:15] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:39:17 INFO: List of all users accessed
+2025-04-17 09:39:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:17] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:39:17 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:17] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:18 INFO: List of movies for user 1 accessed
+2025-04-17 09:39:18 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:18] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 09:39:18 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:18] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:37 INFO: Movie details for movie 1 accessed
+2025-04-17 09:39:37 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:37] "GET /movie/1 HTTP/1.1" 200 -
+2025-04-17 09:39:37 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:37] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:50 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-04-17 09:39:50 INFO: [33mPress CTRL+C to quit[0m
+2025-04-17 09:39:50 INFO:  * Restarting with stat
+2025-04-17 09:39:50 WARNING:  * Debugger is active!
+2025-04-17 09:39:50 INFO:  * Debugger PIN: 290-174-387
+2025-04-17 09:39:50 INFO: Home page accessed
+2025-04-17 09:39:50 INFO: Home page accessed
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "GET /home HTTP/1.1" 200 -
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 09:39:50 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:50] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-04-17 09:39:51 INFO: List of all users accessed
+2025-04-17 09:39:51 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:51] "GET /users HTTP/1.1" 200 -
+2025-04-17 09:39:51 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:51] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -
+2025-04-17 09:39:52 INFO: List of movies for user 1 accessed
+2025-04-17 09:39:52 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:52] "GET /users/1 HTTP/1.1" 200 -
+2025-04-17 09:39:52 INFO: 127.0.0.1 - - [17/Apr/2025 09:39:52] "[36mGET /_static/style.css HTTP/1.1[0m" 304 -

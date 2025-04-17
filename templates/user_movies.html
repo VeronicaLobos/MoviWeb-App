@@ -24,15 +24,11 @@
     <div class="movies-grid">
         {% for movie in user_movies %}
             <article class="movie">
-                <h3>* User rated: {{ movie[1] }} *</h3><br>
                 <a href="/movie/{{ movie[0].movie_id }}">
                     <img src="{{ movie[0].poster_url }}" alt="Movie Poster" class="movie-cover" height="300"><br>
                 </a>
                 <form action="/users/{{ user_id }}/delete_movie/{{ movie[0].movie_id }}" method="post">
                     <input type="submit" value="Delete from list" class="button">
-                </form>
-                <form action="/users/{{ user_id }}/update_rating/{{ movie[0].movie_id }}" method="get">
-                    <input type="submit" value="Update user rating" class="button">
                 </form>
                 <form action="/users/{{ user_id }}/update_movie/{{ movie[0].movie_id }}" method="get">
                     <input type="submit" value="Update movie data" class="button">
