@@ -125,7 +125,7 @@ my_api_key="YOUR_OMDB_API_KEY"
 ```
 Without this key, the app will not be able to fetch movie data from the OMDb API.
 
-### 4. Instal dependencies
+### 4. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```

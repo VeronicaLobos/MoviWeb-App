@@ -24,8 +24,7 @@ App Key Features:
  - The API is built using Flask and SQLAlchemy, and it uses
     SQLite as the database.
  - Endpoints for adding, updating, and deleting movies, adding
-    users, adding user ratings, and retrieving movie details
-    and user ratings.
+    users, and retrieving movie details.
  - Input validation in every endpoint to ensure that the data
     provided by the user is valid and complete.
  - Error handling to return appropriate error messages
@@ -95,7 +94,7 @@ with app.app_context():
 # - Define the route to list all movies associated with a
 #   given user, with the username............................[√]
 # - Define the route to add a new user to the database.......[√]
-# - Define the route to add a new movie to the user's
+# - Define the route to add a new movie to the db and user's
 #   list of favorite movies..................................[√]
 # - Define the route to update the details of a specific
 #   movie in the user's favorite movies list.................[√]
@@ -154,7 +153,7 @@ def _validate_movie_data(movie_to_update, current_movie):
     return current_movie
 
 
-@app.route('/home')
+@app.route('/')
 @limiter.limit("10/minute")
 def home():
     """
@@ -422,7 +421,7 @@ def update_movie(user_id, movie_id):
 
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>',
                                                   methods=['POST'])
-@limiter.limit("5/minute")
+@limiter.limit("10/minute")
 def delete_movie(user_id, movie_id):
     """
     This route allows a user to delete a specific movie
@@ -488,7 +487,7 @@ def movie_details(movie_id):
 
 
 @app.errorhandler(404)
-def not_found(error):
+def not_found():
     """
     Returns a 404 error message for any invalid URL.
     """
@@ -506,6 +505,6 @@ def internal_server_error(error):
 # [Step 3] Define the main function to run the Flask application
 
 if __name__ == '__main__':
-    URL_HOME = 'http://127.0.0.1:5002/home'
-    webbrowser.open_new(URL_HOME)
-    app.run(port=5002, debug=True)
+    URL = 'http://127.0.0.1:5000/'
+    webbrowser.open_new(URL)
+    app.run(port=5000, debug=True)

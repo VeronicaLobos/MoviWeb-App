@@ -3,9 +3,8 @@
 ========================
 
 This is a Restful API for a Movie Web App that allows users to
-manage a list with their favorite movies and give a rating to
-each movie, as well as retrieve movie details from the OMDb API
-and edit the movie information.
+manage a list with their favorite movies, as well as retrieve
+movie details from the OMDb API and edit the movie information.
 
 This program is a learning project for the Software Engineering
 Bootcamp at MasterSchool. It showcases what I have learned
@@ -25,8 +24,7 @@ App Key Features:
  - The API is built using Flask and SQLAlchemy, and it uses
     SQLite as the database.
  - Endpoints for adding, updating, and deleting movies, adding
-    users, adding user ratings, and retrieving movie details
-    and user ratings.
+    users, and retrieving movie details.
  - Input validation in templates to ensure that the user
     provides valid data before submitting the form.
  - The API also fetches movie data from the OMDb API using the
@@ -93,11 +91,9 @@ with app.app_context():
 # - 4. Define the route to add a user..........................[√]
 #     · Adds a new user to the db
 # - 5. Define the route to add a movie.........................[√]
-#     · Adds a new movie and user rating to the db
+#     · Adds a new movie to the db and to the user's list
 # - 6. Define the route to update a movie......................[√]
 #     · Updates a movie information in the db
-# - Extra. Define the route to update a rating.................[√]
-#     · Updates a user rating for a movie in the db
 # - 7. Define the route to delete a movie......................[√]
 #     · Deletes a movie from the user's list,
 #       and from the db if no other user has rated it
@@ -108,7 +104,7 @@ with app.app_context():
 # - Extra. Define the route to handle errors...................[√]
 #     · Handles 404 and 500 errors
 
-@app.route('/home')
+@app.route('/')
 def home():
     """
     Renders the home page of the application with a welcome
@@ -172,7 +168,6 @@ def list_user_movies(user_id):
     user_name = data_manager.get_user_name(user_id)
 
     if user_movies:
-        # Extract the movie (Movie) and their ratings (int)
         user_movies = [movie for movie in user_movies]
         return render_template('user_movies.html',
                                user_id=user_id,
@@ -290,58 +285,6 @@ def add_movie(user_id):
 
     return render_template('add_movie.html',
                            user_id=user_id)
-
-
-@app.route('/users/<int:user_id>/update_rating/<int:movie_id>',
-                                            methods=['GET', 'POST'])
-def update_rating(user_id, movie_id):
-    """
-    This route will display a form allowing for the updating
-    of details of a specific movie in a user’s list.
-
-    * If a GET request is made, it renders the update_rating.html
-    template with a form to update the rating of a movie.
-
-    * If a POST request is made:
-    - It retrieves the updated rating from the request form.
-    - Calls the update_rating method of the DataManagerSQLite
-      instance to update the rating of the movie in the database.
-
-    Returns:
-        - It renders the redirect.html template with a
-        message informing the user with the resulting operation,
-        either the movie was updated successfully or not found.
-    """
-    if request.method == "POST":
-        app.logger.info("POST request to update movie rating"
-                        "by {user_id} for movie {movie_id}")
-        rating = request.form.get('rating')
-
-        movie = data_manager.get_movie(movie_id)
-
-        updated_movie = data_manager.update_rating(user_id,
-                            movie_id, rating)
-
-        if updated_movie:
-            status = "Movie updated"
-            message = f"Movie {movie.movie_name} updated successfully!"
-            app.logger.info(message)
-            return render_template('redirect.html',
-                                   status=status,
-                                   message=message,
-                                   user_id=user_id,
-                                   movie_id=movie_id), 200
-
-        status = "Movie not found"
-        message = f"Movie {movie.movie_name} not found."
-        return render_template('redirect.html',
-                                   status=status,
-                                   message=message,
-                                   user_id=user_id,
-                                   movie_id=movie_id), 404
-
-    return render_template('update_rating.html',
-                            user_id=user_id, movie_id=movie_id)
 
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
@@ -510,6 +453,6 @@ def internal_server_error(error):
 # [Step 3] Define the main function to run the Flask application
 
 if __name__ == '__main__':
-    URL = 'http://127.0.0.1:5002/home'
+    URL = 'http://127.0.0.1:5000/'
     webbrowser.open_new(URL)
-    app.run(port=5002, debug=True)
+    app.run(port=5000, debug=True)
