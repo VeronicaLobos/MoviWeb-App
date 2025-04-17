@@ -10,8 +10,37 @@ import time
 import requests as req
 from dotenv import load_dotenv
 import urllib3.exceptions
-
 from data_models import Movie
+
+
+def _get_movie_rating(movie_info):
+    """
+    Fetches a movie rating.
+
+    From the movie_info dictionary, extracts "Ratings",
+    which value is a list of dictionaries.
+    Iterates through all the dictionaries looking for
+    one which attribute 'Source' contains the string
+    "Internet Movie Database", then extracts it's
+    corresponding attribute 'Value', and converts it
+    to a float.
+
+    Handles cases in which 'Value' is incorrect or
+    there is no rating from Internet Movie Database.
+
+    Returns a float, or 0 when there is no rating
+    from IMDb.
+    """
+    all_ratings = movie_info.get('Ratings')
+    for rating in all_ratings:
+        if rating.get('Source') == "Internet Movie Database":
+            rating_str = rating.get('Value')
+            try:
+                rating_float = float(rating_str.split("/")[0])
+                return rating_float
+            except (ValueError, IndexError):
+                print("IMDb rating not found.")
+                return 0.0
 
 
 def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
@@ -98,6 +127,7 @@ def get_new_movie_data(movie_name: str) -> Movie:
         try:
             new_movie_obj = Movie(
                 movie_name = str(movie_info.get("Title")),
+                rating = _get_movie_rating(movie_info),
                 year = int(movie_info.get("Year")),
                 director = str(movie_info.get("Director")),
                 genre=str(movie_info.get("Genre")),
@@ -121,6 +151,7 @@ if __name__ == "__main__":
     movie_data = get_new_movie_data(MOVIE_TITLE)
     if movie_data:
         print(f"Movie Name: {movie_data.movie_name}")
+        print(f"Rating: {movie_data.rating}")
         print(f"Year: {movie_data.year}")
         print(f"Director: {movie_data.director}")
         print(f"Genre: {movie_data.genre}")

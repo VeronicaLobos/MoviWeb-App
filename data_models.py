@@ -51,6 +51,7 @@ class Movie(db.Model): # pylint: disable=too-few-public-methods
     Attributes:
         movie_id (int): The unique identifier for the movie.
         movie_name (str): The name of the movie.
+        rating (float): The IMDb rating of the movie.
         director (str): The director of the movie.
         year (int): The release year of the movie.
         genre (str): The genre of the movie.
@@ -59,6 +60,7 @@ class Movie(db.Model): # pylint: disable=too-few-public-methods
     __tablename__ = 'movies'
     movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     movie_name = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Float)
     year = db.Column(db.Integer)
     director = db.Column(db.String)
     genre = db.Column(db.String)
@@ -71,6 +73,7 @@ class Movie(db.Model): # pylint: disable=too-few-public-methods
     def __str__(self):
         return (f"Movie ID: {self.movie_id}, "
                 f"Movie name: {self.movie_name}, "
+                f"Rating: {self.rating}, "
                 f"Director: {self.director}, "
                 f"Year: {self.year}, "
                 f"Genre: {self.genre}, "
