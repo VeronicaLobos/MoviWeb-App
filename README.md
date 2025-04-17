@@ -1,6 +1,6 @@
 # MovieWeb App: A Flask Movie Web Application
 
-<img width="642" alt="Screenshot 2025-04-11 at 21 25 33" src="https://github.com/user-attachments/assets/e87f8826-2974-4d76-a9a7-c0586aadf41c" />
+<img width="573" alt="Screenshot 2025-04-11 at 21 25 33" src="https://github.com/user-attachments/assets/e87f8826-2974-4d76-a9a7-c0586aadf41c" />
 
 ## About this Project
 
@@ -146,8 +146,8 @@ Open your web browser and go to ```localhost:5002/home```
 
 ## Sneak peek
 
-<img width="646" alt="Screenshot 2025-04-11 at 21 25 51" src="https://github.com/user-attachments/assets/19a08bce-f22d-45c1-8be6-4901448fb8c3" />
+<img width="573" alt="Screenshot 2025-04-11 at 21 25 51" src="https://github.com/user-attachments/assets/19a08bce-f22d-45c1-8be6-4901448fb8c3" />
 
-<img alt="Screenshot 2025-04-17 at 11 56 56" src="https://github.com/user-attachments/assets/8c22880c-4aec-44c4-b2fb-d551c631dac4" />
+<img width="573" alt="Screenshot 2025-04-17 at 11 56 56" src="https://github.com/user-attachments/assets/8c22880c-4aec-44c4-b2fb-d551c631dac4" />
 
 <img width="573" alt="Screenshot 2025-04-17 at 11 57 56" src="https://github.com/user-attachments/assets/21e72d15-8c8f-4e9a-a701-3c05325f35fa" />
