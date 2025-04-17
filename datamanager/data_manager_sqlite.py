@@ -148,8 +148,7 @@ class DataManagerSQLite(DataManagerInterface):
         return True
 
 
-    def add_movie(self, new_movie: Movie, user_id: int,
-                  rating: float) -> bool:
+    def add_movie(self, new_movie: Movie, user_id: int) -> bool:
         """
         Adds a new movie to the database.
 
@@ -158,22 +157,21 @@ class DataManagerSQLite(DataManagerInterface):
           the database.
         - If the movie already exists (or was added), it retrieves
           the movie ID.
-        - Checks if the user already has a rating for this movie:
-            - If the user has a rating, it returns False.
-            - If the user does not have a rating, it creates a new
+        - Checks if the user already has a relationship for this movie:
+            - If the user has a relationship, it returns False.
+            - If the user does not have a relationship, it creates a new
               UserMovie association and adds it to the database.
 
         Parameters:
             new_movie (Movie): The Movie object to be added.
             user_id (int): The ID of the user associated with the
             movie.
-            rating (float): The rating of the movie by the user.
         Returns:
             False if the movie already exists AND the given user_id
-            has a rating for this movie,
+            has a relationship for this movie,
             True if the movie was added successfully, OR
             the movie was already in the database and the user_id
-            already had a rating for this movie (it is not updated).
+            already had a relationship for this movie (it is not updated).
         """
         movie_exists = (Movie.query.filter_by(movie_name=new_movie.movie_name).
                         first())
@@ -185,19 +183,19 @@ class DataManagerSQLite(DataManagerInterface):
         movie = (Movie.query.filter_by(movie_name=new_movie.movie_name).
                         first())
 
-        user_rating_exists = (UserMovie.query.filter_by(user_id=user_id,
+        user_relationship_exists = (UserMovie.query.filter_by(user_id=user_id,
                                                        movie_id=movie.movie_id).
                               first())
 
-        if user_rating_exists is None:
-            user_rating = UserMovie(user_id=user_id,
-                                    movie_id=movie.movie_id, rating=rating)
-            self.db.session.add(user_rating)
+        if user_relationship_exists is None:
+            user_relationship = UserMovie(user_id=user_id,
+                                    movie_id=movie.movie_id)
+            self.db.session.add(user_relationship)
             self.db.session.commit()
             return True
 
-        print(f"User '{user_id}' already has a rating for movie"
-              f" '{movie.movie_name}'.")
+        print(f"User '{user_id}' already has {movie.movie_name} "
+              f"in their list'.")
         return False
 
 

@@ -90,7 +90,6 @@ class UserMovie(db.Model): # pylint: disable=too-few-public-methods
         id (int): The unique identifier for the association.
         user_id (int): The unique identifier for the user.
         movie_id (int): The unique identifier for the movie.
-        rating (float): The rating of the movie by the user.
     """
     __tablename__ = 'user_movies'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -98,9 +97,7 @@ class UserMovie(db.Model): # pylint: disable=too-few-public-methods
                 db.ForeignKey('users.user_id'), nullable = False)
     movie_id = db.Column(db.Integer,
                 db.ForeignKey('movies.movie_id'), nullable = False)
-    rating = db.Column(db.Float)
 
 
     def __str__(self):
-        return (f"User ID: {self.user_id}, Movie ID: {self.movie_id},"
-                f" Rating: {self.rating}")
+        return f"User ID: {self.user_id}, Movie ID: {self.movie_id}"

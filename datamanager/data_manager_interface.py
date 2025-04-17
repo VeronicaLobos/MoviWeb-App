@@ -55,7 +55,7 @@ class DataManagerInterface(ABC):
         """
 
     @abstractmethod
-    def add_movie(self, movie, user_id, rating):
+    def add_movie(self, movie, user_id):
         """
         Adds a new movie to the database.
         """

@@ -243,16 +243,16 @@ def add_movie(user_id):
      - Only users with a user_id can add movies to the database.
 
     * If a POST request is made:
-    - It retrieves the movie name and the rating by the user
-      associated to that id from the request form.
+    - It retrieves the movie name associated to that id from the
+      request form.
     - Calls data_fetcher to fetch the movie data from the OMDb API.
     - A Movie object is returned (if the movie is found in the API).
     - Calls the add_movie method of the DataManagerSQLite instance
       to add the movie to the database:
         - If the movie already exists, it will not be added again.
-        - It checks if there is already a rating for the movie
+        - It checks if there is already a relationship
           with that user_id and movie_id in the UserMovies table.
-        - If the user already rated the movie, it will not be added
+        - If a relationship already exists, it will not be added
           again.
 
     Returns:
@@ -267,7 +267,6 @@ def add_movie(user_id):
         app.logger.info("POST request to add a new movie by {user_id}")
 
         movie_name = request.form.get('movie_name')
-        rating = request.form.get('rating')
         new_movie_obj = data_fetcher(movie_name)
 
         if new_movie_obj is None:
@@ -277,11 +276,10 @@ def add_movie(user_id):
                                    user_id=user_id), 404
 
         new_movie_exists = data_manager.add_movie(new_movie_obj,
-                                                  user_id, rating)
+                                                  user_id)
 
         if new_movie_exists:
-            message = (f"Movie {new_movie_obj.movie_name} added "
-                       f"successfully with rating {rating}!")
+            message = f"Movie {new_movie_obj.movie_name} added successfully!"
             app.logger.info(message)
             return render_template('add_movie.html',
                                    message=message,
