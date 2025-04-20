@@ -297,6 +297,9 @@ def update_movie(user_id, movie_id):
 
     * If a GET request is made, it renders the update_movie.html
     template with a form to update the movie details.
+    - The form is pre-filled with the current movie details
+      retrieved from the database (with the given movie_id
+      parameter in the URL).
 
     * If a POST request is made:
     - It retrieves the current movie object from the database
@@ -316,19 +319,12 @@ def update_movie(user_id, movie_id):
     if request.method == "POST":
         app.logger.info("POST request to update movie details"
                         "by {user_id} for movie {movie_id}")
-        movie_to_update = data_manager.get_movie(movie_id)
 
+        movie_to_update = data_manager.get_movie(movie_id)
         if movie_to_update:
-            if 'movie_name' in request.form and request.form['movie_name']:
-                movie_to_update.movie_name = request.form['movie_name']
-            if 'director' in request.form and request.form['director']:
-                movie_to_update.director = request.form['director']
-            if 'year' in request.form and request.form['year']:
-                movie_to_update.year = request.form['year']
-            if 'genre' in request.form and request.form['genre']:
-                movie_to_update.genre = request.form['genre']
-            if 'poster_url' in request.form and request.form['poster_url']:
-                movie_to_update.poster_url = request.form['poster_url']
+            for key, value in request.form.items():
+                if hasattr(movie_to_update, key) and value:
+                    setattr(movie_to_update, key, value)
 
         updated_movie_name = data_manager.update_movie(movie_to_update)
 
@@ -422,8 +418,6 @@ def about():
     """
     Returns a render of the 'about.html' template with information
     about the application.
-
-    Reads the about.txt file to get the information to display.
     """
     return render_template('about.html'), 200
 

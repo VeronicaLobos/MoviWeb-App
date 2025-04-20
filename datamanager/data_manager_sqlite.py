@@ -183,7 +183,7 @@ class DataManagerSQLite(DataManagerInterface):
 
         user_relationship_exists = (UserMovie.query.filter_by(user_id=user_id,
                                                        movie_id=movie.movie_id).
-                              first())
+                                    first())
 
         if user_relationship_exists is None:
             user_relationship = UserMovie(user_id=user_id,
@@ -197,31 +197,15 @@ class DataManagerSQLite(DataManagerInterface):
         return False
 
 
-    def update_rating(self, user_id, movie_id, rating) -> bool:
-        """
-        Updates the rating of a movie in the UserMovie table.
-
-        Parameters:
-            user_id (int): The ID of the user associated with the movie.
-            movie_id (int): The ID of the movie to be updated.
-            rating (float): The new rating of the movie by the user.
-
-        Returns:
-            True if the movie was updated successfully,
-            False if the movie does not exist.
-        """
-        user_rating = UserMovie.query.filter_by(user_id=user_id,
-                                                movie_id=movie_id).first()
-
-        if user_rating:
-            user_rating.rating = rating
-            self.db.session.commit()
-            return True
-
-
     def update_movie(self, updated_movie: Movie) -> bool:
         """
         Updates the movie details in the database.
+
+        - Checks if the movie exists in the database.
+        - If the movie exists, it commits the changes to the database
+          and returns the name of the updated movie.
+        - If the movie does not exist, it prints a message and
+          returns False.
 
         Parameters:
             updated_movie (Movie): The Movie object with

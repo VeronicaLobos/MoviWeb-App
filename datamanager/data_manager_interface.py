@@ -61,12 +61,6 @@ class DataManagerInterface(ABC):
         """
 
     @abstractmethod
-    def update_rating(self, user_id, movie_id, rating):
-        """
-        Updates an existing movie in the database.
-        """
-
-    @abstractmethod
     def update_movie(self, updated_movie) -> bool:
         """
         Updates the movie details in the database.

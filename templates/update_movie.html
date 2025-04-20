@@ -13,7 +13,7 @@
     <div class="form" id="Form">
         <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="POST">
             <label for="movie_name"><h3>Movie name:</h3></label>
-            <input type="text" id="movie_name" name="rating" placeholder="{{ movie.movie_name }}" minlength="1" maxlength="50"><br><br>
+            <input type="text" id="movie_name" name="movie_name" placeholder="{{ movie.movie_name }}" minlength="1" maxlength="50"><br><br>
             <label for="rating"><h3>IMDB Rating:</h3></label>
             <input type="number" id="rating" name="rating" placeholder="{{ movie.rating }}" min="0" max="10" step="0.1"><br><br>
             <label for="year"><h3>Year:</h3></label>
