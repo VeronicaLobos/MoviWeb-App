@@ -104,7 +104,7 @@ def _get_movie_info(movie_name: str, max_retries=3, initial_delay=1) -> dict:
     return {}
 
 
-def get_new_movie_data(movie_name: str) -> Movie:
+def get_new_movie_data(movie_name: str) -> Movie | None:
     """
     Fetches and formats movie data from the OMDb API.
 
@@ -128,9 +128,9 @@ def get_new_movie_data(movie_name: str) -> Movie:
             new_movie_obj = Movie(
                 movie_name = str(movie_info.get("Title")),
                 rating = _get_movie_rating(movie_info),
-                year = int(movie_info.get("Year")),
+                year = int(movie_info.get("Year", 0)),
                 director = str(movie_info.get("Director")),
-                genre=str(movie_info.get("Genre")),
+                genre= str(movie_info.get("Genre")),
                 poster_url = str(movie_info.get("Poster")),
                 plot = str(movie_info.get("Plot"))
             )
@@ -140,9 +140,8 @@ def get_new_movie_data(movie_name: str) -> Movie:
         except UnboundLocalError as e:
             print(f"UnboundLocalError while creating Movie object: {e}")
 
-    else:
-        print("Could not fetch the movie data")
-        return None
+    print("Could not fetch the movie data")
+    return None
 
 
 if __name__ == "__main__":

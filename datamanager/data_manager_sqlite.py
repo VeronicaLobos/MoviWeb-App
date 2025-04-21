@@ -47,7 +47,7 @@ class DataManagerSQLite(DataManagerInterface):
 
     ## Any get operation will return a list of objects
 
-    def get_user_name(self, user_id: int) -> str:
+    def get_user_name(self, user_id: int) -> str | None:
         """
         Retrieves the user_name associated with a given user ID.
 
@@ -225,7 +225,7 @@ class DataManagerSQLite(DataManagerInterface):
             return False
 
 
-    def delete_movie(self, user_id, movie_id) -> str:
+    def delete_movie(self, user_id: int, movie_id: int) -> str | bool:
         """
         Deletes a row from the UserMovie table based
         on user_id and movie_id.
