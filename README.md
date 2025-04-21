@@ -10,7 +10,7 @@ about Python programming, API and web development.
 A step-by-step guide is included to help you understand how the
 code has been implemented.
 
-Now with deployment on https://veronicalobos.pythonanywhere.com/home !
+Now with deployment on https://veronicalobos.pythonanywhere.com/ !
 
 ## Technologies Used
 
@@ -29,8 +29,10 @@ Two versions of the MovieWeb App are provided:
 1. **app_csr.py**: This version is an API. Clients can implement
 their own front-end using the provided endpoints. It is a 
 Client-Side Rendering (CSR) version.
+Can be tested using Postman or any other API testing tool.
 2. **app_ssr.py**: This version is a Restful API with Server-Side 
 Rendering (SSR) using Flask and Jinja2 templates.
+It has been deployed on PythonAnywhere.
 
  - CRUD operations for managing movies, users and ratings.
  - The API is built using Flask and SQLAlchemy, and it uses
@@ -41,6 +43,8 @@ Rendering (SSR) using Flask and Jinja2 templates.
     provides valid data before submitting the form.
  - Deletion confirmation for movies and users to prevent
     accidental deletions.
+ - Redirection (with Javascript) to the home page after deleting
+    a movie.
  - The API fetches movie data from the OMDb API using the
     omdb_data_fetcher module (requires an API key).
  - SSR (Server-Side Rendering) is used to render HTML jinja2
